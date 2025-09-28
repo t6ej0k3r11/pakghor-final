@@ -6,6 +6,7 @@ import "./Navbar.css";
 interface NavBarProps {
   brandName: string;
   navItems: string[];
+  logoSrc: string;
 }
 
 const NavBar = ({ brandName, navItems }: NavBarProps) => {
