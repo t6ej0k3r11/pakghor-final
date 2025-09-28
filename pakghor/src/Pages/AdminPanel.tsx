@@ -17,7 +17,9 @@ const AdminPanel: React.FC = () => {
   }, []);
 
   const fetchCards = async () => {
-    const res = await fetch("http://localhost:5000/api/cards");
+    // const res = await fetch("http://localhost:5000/api/cards");
+
+    const res = await fetch("https://pakghor-final-658f.vercel.app/api/cards");
     const data = await res.json();
     setCards(data);
   };

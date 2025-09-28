@@ -1,7 +1,7 @@
 import type { CardInterface } from "../types";
 import styles from "./Card.module.css";
 import Badge from "./Badge";
-import Button from "./Button"; // ✅ use reusable Button
+import Button from "./Button";
 import { useNavigate, Link } from "react-router-dom";
 
 const Card = ({
@@ -44,13 +44,12 @@ const Card = ({
         {subtitle && <small className={styles.subtitle}>{subtitle}</small>}
         <p className={styles.body}>{body}</p>
 
-        {/* ✅ Styled Button with redirect logic */}
         <div onClick={handleButtonClick}>
           <Button
             text="Order Now"
             filled={true}
             type="primary"
-            to="#" // placeholder, navigation handled by handleButtonClick
+            to="#"
             icon={null}
           />
         </div>

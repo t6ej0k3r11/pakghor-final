@@ -16,7 +16,13 @@ const AddCard: React.FC = () => {
 
   const handleSubmit = async () => {
     try {
-      await fetch("http://localhost:5000/api/cards", {
+      // await fetch("http://localhost:5000/api/cards", {
+      //   method: "POST",
+      //   headers: { "Content-Type": "application/json" },
+      //   body: JSON.stringify(form),
+      // });
+
+      await fetch("https://pakghor-final-658f.vercel.app/api/cards", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),

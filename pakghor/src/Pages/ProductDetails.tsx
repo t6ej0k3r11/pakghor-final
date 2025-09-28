@@ -17,7 +17,9 @@ const ProductDetails = () => {
   const [product, setProduct] = useState<Card | null>(null);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/api/cards/${id}`)
+    // fetch(`http://localhost:5000/api/cards/${id}`)
+
+    fetch(`https://pakghor-final-658f.vercel.app/api/cards/${id}`)
       .then((res) => res.json())
       .then((data) => setProduct(data));
   }, [id]);

@@ -13,7 +13,11 @@ function Signup() {
   const handleSignup = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     axios
-      .post("http://localhost:5000/api/register", { username, password })
+      // .post("http://localhost:5000/api/register", { username, password })
+      .post("https://pakghor-final-658f.vercel.app/api/register", {
+        username,
+        password,
+      })
       .then(() => {
         setMsg("✅ Account created successfully!");
         setUser("");

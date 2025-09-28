@@ -11,7 +11,9 @@ function Home() {
   const [cards, setCards] = useState<any[]>([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/cards")
+    // fetch("http://localhost:5000/api/cards");
+
+    fetch("https://pakghor-final-658f.vercel.app/api/cards")
       .then((res) => res.json())
       .then((data) => setCards(data));
   }, []);
