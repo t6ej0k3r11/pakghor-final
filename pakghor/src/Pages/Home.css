@@ -1,0 +1,149 @@
+/* Home Wrapper */
+.home-wrapper {
+  font-family: "Poppins", sans-serif;
+  background-color: #fdfdfd;
+  padding: 2rem;
+}
+
+/* Hero Section */
+.hero-section {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.hero-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #333;
+}
+
+.hero-title span {
+  background: linear-gradient(90deg, #f7e169, #ff7e5f);
+  background-clip: text;       /* Standard property */
+  -webkit-background-clip: text; /* For WebKit browsers */
+  -webkit-text-fill-color: transparent;
+  color: transparent;          /* fallback for non-supporting browsers */
+}
+
+.hero-subtitle {
+  margin-top: 0.8rem;
+  font-size: 1.1rem;
+  color: #555;
+}
+
+/* Cards Grid */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+/* Card Hover & Shadow */
+.card {
+  position: relative;
+  background: #fff;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+/* Card Image */
+.card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  transition: transform 0.3s ease;
+}
+
+.card:hover img {
+  transform: scale(1.05);
+}
+
+/* Badge */
+.card .badge {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  background: #ff7e5f;
+  color: #fff;
+  padding: 5px 12px;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+/* Card Body */
+.card-body {
+  padding: 1rem 1.5rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.card-body h3 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, #f7e169, #ff7e5f);
+  background-clip: text;           /* Standard property */
+  -webkit-background-clip: text;   /* WebKit fallback */
+  color: transparent;               /* Makes text use the gradient */
+  -webkit-text-fill-color: transparent; /* WebKit fallback */
+}
+
+
+.card-body p {
+  color: #555;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+/* Indicator / Price */
+.card-indicator {
+  font-weight: 600;
+  color: #ff7e5f;
+  font-size: 1rem;
+}
+
+/* Card Button */
+.card-body button {
+  margin-top: auto;
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #f7e169, #ff7e5f);
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.card-body button:hover {
+  transform: scale(1.05);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .cards-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .hero-title {
+    font-size: 2rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+}

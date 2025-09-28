@@ -1,0 +1,143 @@
+/* Root App Container */
+.App {
+  display: grid;
+  place-items: center;
+  padding: 2rem;
+  gap: 2rem;
+  font-family: "Poppins", sans-serif;
+  background-color: #fdfdfd;
+}
+
+/* Card Grid Container */
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .card-container {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+    gap: 1rem;
+  }
+  .card {
+    max-width: 100%;
+  }
+}
+
+/* Card Hover Effects */
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
+
+/* Brand Name Gradient */
+.brand-name {
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  display: inline-block;
+  background: linear-gradient(90deg, #f7e169, #ff7e5f);
+  
+  /* Modern syntax */
+  background-clip: text;
+  -webkit-background-clip: text; /* Safari/Chrome */
+  color: transparent; /* fallback for non-supporting browsers */
+  -webkit-text-fill-color: transparent; /* Safari/Chrome */
+  
+  transition: all 0.3s ease;
+}
+
+/* Navbar Links */
+.navbar-nav .nav-item .nav-link {
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  color: #333;
+  text-decoration: none;
+}
+.navbar-nav .nav-item .nav-link:hover {
+  color: #fff;
+  background: linear-gradient(90deg, #f7e16960, #ff7e5f60);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+.navbar-nav .nav-item .nav-link.active {
+  color: #fff;
+  background: linear-gradient(90deg, #f7e169, #ff7e5f);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Navbar Search */
+.navbar-search {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  background-color: #f8f8f8;
+  border-radius: 30px;
+  padding: 0.3rem 0.8rem;
+  border: 1px solid #ddd;
+  transition: all 0.3s ease;
+}
+.navbar-search:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+.navbar-search input {
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: 0.4rem 0.6rem;
+  font-size: 0.95rem;
+  flex: 1;
+}
+.navbar-search button {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: #ffea5f;
+  font-size: 1.2rem;
+  transition: transform 0.2s ease;
+}
+.navbar-search button:hover {
+  transform: scale(1.2);
+}
+
+/* Navbar Buttons */
+.navbar .d-flex.gap-2 {
+  margin-left: auto;
+}
+.nav-button {
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  font-weight: 500;
+  color: #333;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  margin-left: 0.5rem;
+  border: 1px solid #ddd;
+  background-color: #fff;
+}
+.nav-button:hover {
+  color: #fff;
+  background: linear-gradient(90deg, #f7e16960, #ff7e5f60);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Filled Button Variant */
+.nav-button.filled {
+  background: linear-gradient(90deg, #f7e169, #ff7e5f);
+  color: #fff;
+  border: none;
+}
+.nav-button.filled:hover {
+  filter: brightness(1.1);
+}
+
