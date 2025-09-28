@@ -6,29 +6,50 @@ const router = express.Router();
 
 router.post("/register", async (req, res) => {
   try {
-    const { username, password } = req.body;
+    const { username, email, mobile, password } = req.body;
 
-    const existingUser = await User.findOne({ username });
+    if (!username || !email || !mobile || !password) {
+      return res.status(400).json({ error: "All fields are required" });
+    }
+
+    const existingUser = await User.findOne({
+      $or: [{ username }, { email }],
+    });
+
     if (existingUser) {
       return res.status(400).json({ error: "User already exists" });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const newUser = new User({ username, password: hashedPassword });
+    const newUser = new User({
+      username,
+      email,
+      mobile,
+      password: hashedPassword,
+    });
+
     await newUser.save();
 
-    res.json({ message: "User registered successfully!" });
+    res.json({ message: "✅ User registered successfully!" });
   } catch (err) {
-    res.status(500).json({ error: "Server error" });
+    console.error(err);
+    res.status(500).json({ error: "❌ Server error" });
   }
 });
 
 router.post("/login", async (req, res) => {
   try {
-    const { username, password } = req.body;
+    const { loginId, password } = req.body; 
 
-    const user = await User.findOne({ username });
+    if (!loginId || !password) {
+      return res.status(400).json({ error: "All fields are required" });
+    }
+
+    const user = await User.findOne({
+      $or: [{ username: loginId }, { email: loginId }],
+    });
+
     if (!user) {
       return res.status(400).json({ error: "Invalid credentials" });
     }
@@ -43,16 +64,18 @@ router.post("/login", async (req, res) => {
       process.env.JWT_SECRET,
       { expiresIn: "1h" }
     );
+
     res.cookie("token", token, {
-      httpOnly: true,   // frontend JS can't read it
-      secure: process.env.NODE_ENV === "production", // HTTPS only in prod
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
-      maxAge: 60 * 60 * 1000 // 1 hour
+      maxAge: 60 * 60 * 1000, 
     });
 
-    res.json({ message: "Login successful", token });
+    res.json({ message: "✅ Login successful", token });
   } catch (err) {
-    res.status(500).json({ error: "Server error" });
+    console.error(err);
+    res.status(500).json({ error: "❌ Server error" });
   }
 });
 

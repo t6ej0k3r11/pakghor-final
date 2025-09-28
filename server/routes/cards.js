@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const Card = require("../models/Card");
 
-// CREATE card
 router.post("/cards", async (req, res) => {
   try {
     const card = new Card(req.body);
@@ -13,7 +12,6 @@ router.post("/cards", async (req, res) => {
   }
 });
 
-// READ all cards
 router.get("/cards", async (req, res) => {
   try {
     const cards = await Card.find();
@@ -23,7 +21,6 @@ router.get("/cards", async (req, res) => {
   }
 });
 
-// ✅ READ single card by id
 router.get("/cards/:id", async (req, res) => {
   try {
     const { id } = req.params;
@@ -37,7 +34,6 @@ router.get("/cards/:id", async (req, res) => {
   }
 });
 
-// UPDATE card
 router.put("/cards/:id", async (req, res) => {
   try {
     const { id } = req.params;
@@ -48,7 +44,6 @@ router.put("/cards/:id", async (req, res) => {
   }
 });
 
-// DELETE card
 router.delete("/cards/:id", async (req, res) => {
   try {
     await Card.findByIdAndDelete(req.params.id);

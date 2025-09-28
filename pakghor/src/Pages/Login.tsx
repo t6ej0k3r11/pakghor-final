@@ -2,28 +2,28 @@ import React, { useState } from "react";
 import logo from "../assets/logo.jpg";
 import "./Login.css";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Login: React.FC = () => {
-  const [username, setUser] = useState<string>("");
+  const [usernameOrEmail, setUsernameOrEmail] = useState<string>("");
   const [password, setPass] = useState<string>("");
   const [msg, setMsg] = useState<string>("");
   const navigate = useNavigate();
 
   const handleLogin = async () => {
+    if (!usernameOrEmail || !password) {
+      setMsg("⚠️ Please enter both username/email and password");
+      return;
+    }
+
     try {
-      //local test
-      // const res = await fetch("http://localhost:5000/api/login", {
-      //   method: "POST",
-      //   headers: { "Content-Type": "application/json" },
-      //   body: JSON.stringify({ username, password }),
-      // });
-      //live api
+      // Call live API
       const res = await fetch(
         "https://pakghor-final-658f.vercel.app/api/login",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ username, password }),
+          body: JSON.stringify({ usernameOrEmail, password }),
         }
       );
 
@@ -31,15 +31,13 @@ const Login: React.FC = () => {
 
       if (res.ok) {
         setMsg("✅ Login successful!");
-        sessionStorage.setItem("token", "pakghor-token");
+        sessionStorage.setItem("token", data.token); // store real token
 
-        const loggedUser = username;
-
-        setUser("");
+        setUsernameOrEmail("");
         setPass("");
 
         setTimeout(() => {
-          if (loggedUser.startsWith("a-")) {
+          if (data.username && data.username.startsWith("a-")) {
             navigate("/admin");
           } else {
             navigate("/Home");
@@ -56,14 +54,16 @@ const Login: React.FC = () => {
   return (
     <div className="login-wrapper">
       <div className="login-card">
-        <img src={logo} alt="Pakghor Logo" className="login-logo" />
+        <Link to="/home">
+          <img src={logo} alt="Pakghor Logo" className="login-logo" />
+        </Link>
         <h2 className="login-title">Welcome Back 👋</h2>
 
         <input
           type="text"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUser(e.target.value)}
+          placeholder="Username or Email"
+          value={usernameOrEmail}
+          onChange={(e) => setUsernameOrEmail(e.target.value)}
           className="login-input"
         />
 
