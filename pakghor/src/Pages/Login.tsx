@@ -11,7 +11,14 @@ const Login: React.FC = () => {
 
   const handleLogin = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/login", {
+      //local test
+      // const res = await fetch("http://localhost:5000/api/login", {
+      //   method: "POST",
+      //   headers: { "Content-Type": "application/json" },
+      //   body: JSON.stringify({ username, password }),
+      // });
+      //live api
+      const res = await fetch("https://pakghor-final.vercel.app/api/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
