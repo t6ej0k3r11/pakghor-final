@@ -18,11 +18,14 @@ const Login: React.FC = () => {
       //   body: JSON.stringify({ username, password }),
       // });
       //live api
-      const res = await fetch("https://pakghor-final.vercel.app/api/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
-      });
+      const res = await fetch(
+        "https://pakghor-final-658f.vercel.app/api/login",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username, password }),
+        }
+      );
 
       const data = await res.json();
 
