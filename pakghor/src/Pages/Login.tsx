@@ -19,7 +19,9 @@ const Login: React.FC = () => {
     try {
       // Call live API
       const res = await fetch(
-        "https://pakghor-final-658f.vercel.app/api/login",
+        // "https://pakghor-final-658f.vercel.app/api/login",
+        // "/api/login",
+        "http://localhost:5000/api/login",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

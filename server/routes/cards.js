@@ -1,7 +1,9 @@
-const express = require("express");
-const router = express.Router();
-const Card = require("../models/Card");
+import express from "express";
+import Card from "../models/Card.js";
 
+const router = express.Router();
+
+// Create a new card
 router.post("/cards", async (req, res) => {
   try {
     const card = new Card(req.body);
@@ -12,6 +14,7 @@ router.post("/cards", async (req, res) => {
   }
 });
 
+// Get all cards
 router.get("/cards", async (req, res) => {
   try {
     const cards = await Card.find();
@@ -21,6 +24,7 @@ router.get("/cards", async (req, res) => {
   }
 });
 
+// Get a single card by ID
 router.get("/cards/:id", async (req, res) => {
   try {
     const { id } = req.params;
@@ -34,16 +38,20 @@ router.get("/cards/:id", async (req, res) => {
   }
 });
 
+// Update a card by ID
 router.put("/cards/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const updatedCard = await Card.findByIdAndUpdate(id, req.body, { new: true });
+    const updatedCard = await Card.findByIdAndUpdate(id, req.body, {
+      new: true,
+    });
     res.json(updatedCard);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
+// Delete a card by ID
 router.delete("/cards/:id", async (req, res) => {
   try {
     await Card.findByIdAndDelete(req.params.id);
@@ -53,4 +61,4 @@ router.delete("/cards/:id", async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

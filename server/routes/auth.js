@@ -1,7 +1,8 @@
-const express = require("express");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const User = require("../models/User");
+import express from "express";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import User from "../models/User.js"; // 👈 must include .js in ESM
+
 const router = express.Router();
 
 router.post("/register", async (req, res) => {
@@ -40,14 +41,14 @@ router.post("/register", async (req, res) => {
 
 router.post("/login", async (req, res) => {
   try {
-    const { loginId, password } = req.body; 
+    const { usernameOrEmail, password } = req.body;
 
-    if (!loginId || !password) {
+    if (!usernameOrEmail || !password) {
       return res.status(400).json({ error: "All fields are required" });
     }
 
     const user = await User.findOne({
-      $or: [{ username: loginId }, { email: loginId }],
+      $or: [{ username: usernameOrEmail }, { email: usernameOrEmail }],
     });
 
     if (!user) {
@@ -69,7 +70,7 @@ router.post("/login", async (req, res) => {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
-      maxAge: 60 * 60 * 1000, 
+      maxAge: 60 * 60 * 1000,
     });
 
     res.json({ message: "✅ Login successful", token });
@@ -79,4 +80,4 @@ router.post("/login", async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router; // 👈 use ESM export

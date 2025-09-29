@@ -1,40 +1,42 @@
+import express from "express";
+import mongoose from "mongoose";
+import cors from "cors";
+import dotenv from "dotenv";
+import UserModel from "./models/User.js";
 
-const express = require("express");
-const mongoose = require("mongoose");
-const cors = require("cors");
-const dotenv = require("dotenv");
-const UserModel = require("./models/User");
+import authRoutes from "./routes/auth.js";
+import cardRoutes from "./routes/cards.js";
 
-dotenv.config(); 
-
-const authRoutes = require("./routes/auth"); 
+dotenv.config();
 
 const app = express();
+const PORT = process.env.PORT || 5000;
 
-const cardRoutes = require("./routes/cards");
-
-
+// Middleware
 app.use(cors());
 app.use(express.json());
 
+// Routes
 app.use("/api", authRoutes);
 app.use("/api", cardRoutes);
 
+// Connect to MongoDB
 const mongoURI = process.env.MONGO_URI;
-
 mongoose
   .connect(mongoURI)
   .then(() => console.log("✅ MongoDB connected successfully"))
   .catch((err) => console.error("❌ MongoDB connection error:", err.message));
 
+// Temporary local registration route
 app.post("/register", async (req, res) => {
   try {
     const { username, password } = req.body;
 
     if (!username || !password) {
-      return res.status(400).json({ error: "Username and password are required" });
+      return res
+        .status(400)
+        .json({ error: "Username and password are required" });
     }
-
 
     const existingUser = await UserModel.findOne({ username });
     if (existingUser) {
@@ -50,8 +52,7 @@ app.post("/register", async (req, res) => {
   }
 });
 
-
-const PORT = process.env.PORT || 5000;
+// Start server
 app.listen(PORT, () => {
   console.log(`🚀 Server running at http://localhost:${PORT}`);
 });
