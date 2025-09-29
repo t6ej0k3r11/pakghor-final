@@ -39,7 +39,7 @@ const Login: React.FC = () => {
         setPass("");
 
         setTimeout(() => {
-          if (data.username && data.username.startsWith("a-")) {
+          if (data.usernameOrEmail && data.usernameOrEmail.startsWith("a-")) {
             navigate("/admin");
           } else {
             navigate("/Home");

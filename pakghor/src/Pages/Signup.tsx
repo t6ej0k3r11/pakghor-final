@@ -17,6 +17,7 @@ function Signup() {
   const handleSignup = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     axios
+
       .post("http://localhost:5000/api/register", {
         username,
         email,

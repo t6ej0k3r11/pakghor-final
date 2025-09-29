@@ -1,29 +1,61 @@
 import "../App.css";
+import "./About.css";
 
-function About() {
+interface AboutCard {
+  title: string;
+  description: string;
+  icon: string;
+}
+
+const About: React.FC = () => {
+  const aboutCards: AboutCard[] = [
+    {
+      title: "Our Mission",
+      description:
+        "To bring joy to every meal with fresh ingredients, carefully crafted recipes, and exceptional service.",
+      icon: "🎯",
+    },
+    {
+      title: "Our Vision",
+      description:
+        "To become the most loved local food brand that combines taste, quality, and happiness in every bite.",
+      icon: "🌟",
+    },
+    {
+      title: "Our Values",
+      description:
+        "Quality, Passion, Customer Satisfaction, and Continuous Improvement in everything we do.",
+      icon: "💛",
+    },
+  ];
+
   return (
-    <div>
-      <main
-        className="page-container"
-        style={{ padding: "2rem", textAlign: "center" }}
-      >
-        <h1>About Us</h1>
-        <p
-          style={{ maxWidth: "600px", margin: "1rem auto", lineHeight: "1.6" }}
-        >
-          Welcome to Pakghor! We are dedicated to providing delicious food and
-          great service. Our passion is to make every meal a memorable
-          experience.
+    <div className="about-wrapper">
+      {/* Hero Section */}
+      <section className="about-hero">
+        <h1 className="about-title">
+          About <span>Pakghor</span>
+        </h1>
+        <p className="about-subtitle">
+          We are dedicated to providing delicious food and great service. Our
+          passion is to make every meal a memorable experience.
         </p>
-        <p
-          style={{ maxWidth: "600px", margin: "1rem auto", lineHeight: "1.6" }}
-        >
-          Explore our menu, enjoy our specialties, and let us make your day a
-          little brighter with tasty bites.
-        </p>
-      </main>
+      </section>
+
+      {/* About Cards */}
+      <section className="about-grid">
+        {aboutCards.map((card, index) => (
+          <div key={index} className="about-card">
+            <div className="about-icon-wrapper">
+              <span className="about-icon">{card.icon}</span>
+            </div>
+            <h3>{card.title}</h3>
+            <p>{card.description}</p>
+          </div>
+        ))}
+      </section>
     </div>
   );
-}
+};
 
 export default About;

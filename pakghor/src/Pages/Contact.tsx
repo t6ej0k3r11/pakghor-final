@@ -1,116 +1,96 @@
-import "../App.css";
+import React from "react";
+import {
+  EnvelopeIcon,
+  PhoneIcon,
+  MapPinIcon,
+  PaperAirplaneIcon,
+} from "@heroicons/react/24/solid";
+import Button from "../components/Button";
+import "./Contact.css";
 
-function Contact() {
+const Contact: React.FC = () => {
+  const contactInfo = [
+    {
+      title: "Phone",
+      body: "+880 123 456 789",
+      icon: <PhoneIcon className="contact-icon" />,
+    },
+    {
+      title: "Email",
+      body: "pakghor@gmail.com",
+      icon: <EnvelopeIcon className="contact-icon" />,
+    },
+    {
+      title: "Location",
+      body: "Mymensingh, Bangladesh",
+      icon: <MapPinIcon className="contact-icon" />,
+    },
+  ];
+
   return (
-    <div>
-      <section
-        style={{
-          padding: "3rem 2rem",
-          textAlign: "center",
-        }}
-      >
-        <h1 style={{ fontSize: "2.5rem", fontWeight: "700" }}>Contact Us</h1>
-        <p
-          style={{ maxWidth: "600px", margin: "1rem auto", lineHeight: "1.6" }}
-        >
-          Have questions or want to place an order? Send us a message and we'll
-          get back to you as soon as possible.
+    <div className="contact-wrapper">
+      {/* Hero Section */}
+      <section className="contact-hero">
+        <h1 className="contact-title">
+          <span>Reach Us</span>
+        </h1>
+        <p className="contact-subtitle">
+          We’d love to hear from you! Reach out with any questions, feedback, or
+          just to say hello.
         </p>
       </section>
-      <section
-        style={{
-          maxWidth: "600px",
-          margin: "0 auto",
-          padding: "2rem",
-          backgroundColor: "#f8f8f8",
-          borderRadius: "1rem",
-          boxShadow: "0 4px 15px rgba(0,0,0,0.1)",
-        }}
-      >
-        <form>
-          <div style={{ marginBottom: "1rem" }}>
-            <label
-              htmlFor="name"
-              style={{ display: "block", marginBottom: "0.5rem" }}
-            >
-              Name
-            </label>
-            <input
-              type="text"
-              id="name"
-              placeholder="Your Name"
-              style={{
-                width: "100%",
-                padding: "0.5rem",
-                borderRadius: "0.5rem",
-                border: "1px solid #ccc",
-              }}
-            />
+
+      {/* Contact Cards */}
+      <section className="contact-grid">
+        {contactInfo.map((info, index) => (
+          <div key={index} className="contact-card">
+            <div className="contact-icon-wrapper">{info.icon}</div>
+            <h3>{info.title}</h3>
+            <p>{info.body}</p>
+          </div>
+        ))}
+      </section>
+
+      {/* Contact Form */}
+      <section className="contact-form-wrapper">
+        <h3 className="form-title">
+          <span>Send Us a Message</span>
+        </h3>
+        <p className="form-subtitle">
+          Fill out the form below and we’ll get back to you as soon as possible.
+        </p>
+
+        <form className="contact-form">
+          <div className="form-group">
+            <label htmlFor="name">Name</label>
+            <input type="text" id="name" placeholder="Your Name" />
           </div>
 
-          <div style={{ marginBottom: "1rem" }}>
-            <label
-              htmlFor="email"
-              style={{ display: "block", marginBottom: "0.5rem" }}
-            >
-              Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              placeholder="Your Email"
-              style={{
-                width: "100%",
-                padding: "0.5rem",
-                borderRadius: "0.5rem",
-                border: "1px solid #ccc",
-              }}
-            />
+          <div className="form-group">
+            <label htmlFor="email">Email</label>
+            <input type="email" id="email" placeholder="Your Email" />
           </div>
 
-          <div style={{ marginBottom: "1rem" }}>
-            <label
-              htmlFor="message"
-              style={{ display: "block", marginBottom: "0.5rem" }}
-            >
-              Message
-            </label>
+          <div className="form-group">
+            <label htmlFor="message">Message</label>
             <textarea
               id="message"
               placeholder="Your Message"
               rows={5}
-              style={{
-                width: "100%",
-                padding: "0.5rem",
-                borderRadius: "0.5rem",
-                border: "1px solid #ccc",
-              }}
-            />
+            ></textarea>
           </div>
 
-          <button
-            type="submit"
-            style={{
-              padding: "0.75rem 1.5rem",
-              borderRadius: "0.5rem",
-              border: "none",
-              backgroundColor: "#ff7e5f",
-              color: "#fff",
-              fontWeight: "600",
-              cursor: "pointer",
-              transition: "transform 0.2s ease",
-            }}
-            onMouseEnter={(e) =>
-              (e.currentTarget.style.transform = "scale(1.05)")
-            }
-            onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
-          >
-            Send Message
-          </button>
+          <Button
+            text="Send Message"
+            type="primary"
+            filled={true}
+            icon={<PaperAirplaneIcon />}
+            to="#"
+          />
         </form>
       </section>
     </div>
   );
-}
+};
 
 export default Contact;

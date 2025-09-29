@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { PaperAirplaneIcon } from "@heroicons/react/24/solid";
 import "./ProductDetails.css";
+import Button from "../components/Button";
 
 interface Card {
   _id: string;
@@ -38,10 +39,13 @@ const ProductDetails = () => {
 
         <p className="product-desc">{product.body}</p>
 
-        <button className="product-btn">
-          <PaperAirplaneIcon className="product-icon" />
-          Order Now
-        </button>
+        <Button
+          text="Order Now"
+          type="primary"
+          filled={true}
+          icon={<PaperAirplaneIcon />}
+          to="#"
+        />
       </section>
     </div>
   );
