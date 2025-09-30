@@ -12,14 +12,18 @@
   font-weight: 700;
   background: linear-gradient(90deg, #f7e169, #ff7e5f);
 
-  /* gradient text fix */
-  background-clip: text;              /* Standard property */
-  -webkit-background-clip: text;      /* Safari / Chrome */
-  -webkit-text-fill-color: transparent;
-  color: transparent;                 /* fallback */
   
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+
   margin-bottom: 0.5rem;
+
+  display: block;         
+  text-align: center;     
 }
+
 
 
 .footer-top .tagline {

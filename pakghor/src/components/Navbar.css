@@ -166,3 +166,26 @@
     width: 100%;
   }
 }
+/* Highlight active page */
+.nav-active {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 12px;
+  font-weight: 600;
+}
+
+/* Responsive fixes */
+@media (max-width: 900px) {
+  .auth-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+    align-items: center;
+  }
+
+  .navbar-search {
+    width: 100%;
+    justify-content: center;
+  }
+}
+

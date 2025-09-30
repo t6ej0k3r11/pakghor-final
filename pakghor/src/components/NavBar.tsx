@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.jpg";
 import "./Navbar.css";
 
@@ -18,7 +18,13 @@ const NavBar = ({ brandName, navItems }: NavBarProps) => {
   const handleLogout = () => {
     sessionStorage.removeItem("token");
     navigate("/");
-    window.location.reload();
+    setIsOpen(false); // close mobile menu
+  };
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    // TODO: implement search logic
+    alert("Search functionality coming soon!");
   };
 
   const getPath = (item: string) =>
@@ -42,12 +48,18 @@ const NavBar = ({ brandName, navItems }: NavBarProps) => {
           <ul>
             {navItems.map((item) => (
               <li key={item}>
-                <Link to={getPath(item)}>{item}</Link>
+                <NavLink
+                  to={getPath(item)}
+                  className={({ isActive }) => (isActive ? "nav-active" : "")}
+                  onClick={() => setIsOpen(false)}
+                >
+                  {item}
+                </NavLink>
               </li>
             ))}
           </ul>
 
-          <form className="navbar-search">
+          <form className="navbar-search" onSubmit={handleSearch}>
             <input type="search" placeholder="Search..." />
             <button type="submit">Go</button>
           </form>
@@ -55,10 +67,18 @@ const NavBar = ({ brandName, navItems }: NavBarProps) => {
           <div className="auth-buttons">
             {!isLoggedIn ? (
               <>
-                <Link to="/login" className="nav-button">
+                <Link
+                  to="/login"
+                  className="nav-button"
+                  onClick={() => setIsOpen(false)}
+                >
                   Login
                 </Link>
-                <Link to="/signup" className="nav-button">
+                <Link
+                  to="/signup"
+                  className="nav-button"
+                  onClick={() => setIsOpen(false)}
+                >
                   Signup
                 </Link>
               </>

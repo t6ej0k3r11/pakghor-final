@@ -36,75 +36,15 @@ function Home() {
       {/* Cards Section */}
       <section className="cards-grid">
         <Card
-          body="Delicious and mouth-watering burger made with fresh ingredients."
+          body="Flame-grilled beef patty with melted cheddar & mozzarella, fresh veggies, caramelized onion, smoky house sauce, and a garlic-butter brioche bun."
           title="Juicy Burger"
           image={burgerImage}
           badge={{
             text: "Upcoming",
             filled: true,
           }}
-          indicator="150 BDT"
-          subtitle="Taste in every bite"
-          link="/burger"
-          btn={{
-            text: "Order Now",
-            to: "/product/1",
-            type: "primary",
-            filled: true,
-            icon: <PaperAirplaneIcon />,
-          }}
-        />
-
-        <Card
-          body="Delicious and mouth-watering burger made with fresh ingredients."
-          title="Juicy Burger"
-          image={burgerImage}
-          badge={{
-            text: "Upcoming",
-            filled: true,
-          }}
-          indicator="150 BDT"
-          subtitle="Taste in every bite"
-          link="/burger"
-          btn={{
-            text: "Order Now",
-            to: "#",
-            type: "primary",
-            filled: true,
-            icon: <PaperAirplaneIcon />,
-          }}
-        />
-
-        <Card
-          body="Delicious and mouth-watering burger made with fresh ingredients."
-          title="Juicy Burger"
-          image={burgerImage}
-          badge={{
-            text: "Upcoming",
-            filled: true,
-          }}
-          indicator="150 BDT"
-          subtitle="Taste in every bite"
-          link="/burger"
-          btn={{
-            text: "Order Now",
-            to: "#",
-            type: "primary",
-            filled: true,
-            icon: <PaperAirplaneIcon />,
-          }}
-        />
-
-        <Card
-          body="Delicious and mouth-watering burger made with fresh ingredients."
-          title="Juicy Burger"
-          image={burgerImage}
-          badge={{
-            text: "Upcoming",
-            filled: true,
-          }}
-          indicator="150 BDT"
-          subtitle="Taste in every bite"
+          indicator="180tk"
+          subtitle="Double cheese • Flame-grilled perfection "
           link="/burger"
           btn={{
             text: "Order Now",
