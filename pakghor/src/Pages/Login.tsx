@@ -9,6 +9,7 @@ const Login: React.FC = () => {
   const [password, setPass] = useState<string>("");
   const [msg, setMsg] = useState<string>("");
   const navigate = useNavigate();
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   const handleLogin = async () => {
     if (!usernameOrEmail || !password) {
@@ -18,16 +19,15 @@ const Login: React.FC = () => {
 
     try {
       // Call live API
-      const res = await fetch(
-        // "https://pakghor-final-658f.vercel.app/api/login",
-        // "/api/login",
-        "http://localhost:5000/api/login",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ usernameOrEmail, password }),
-        }
-      );
+      // const res = await fetch(
+      // "https://pakghor-final-658f.vercel.app/api/login",
+      // "/api/login",
+      // "http://localhost:5000/api/login",
+      const res = await fetch(`${apiUrl}/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ usernameOrEmail, password }),
+      });
 
       const data = await res.json();
 
@@ -39,7 +39,7 @@ const Login: React.FC = () => {
         setPass("");
 
         setTimeout(() => {
-          if (data.usernameOrEmail && data.usernameOrEmail.startsWith("a-")) {
+          if (data.username && data.username.startsWith("a-")) {
             navigate("/admin");
           } else {
             navigate("/Home");

@@ -9,11 +9,13 @@ import "./Home.css"; // new CSS file
 
 function Home() {
   const [cards, setCards] = useState<any[]>([]);
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     // fetch("http://localhost:5000/api/cards");
 
-    fetch("https://pakghor-final-658f.vercel.app/api/cards")
+    // fetch("https://pakghor-final-658f.vercel.app/api/cards")
+    fetch(`${apiUrl}/cards`)
       .then((res) => res.json())
       .then((data) => setCards(data));
   }, []);

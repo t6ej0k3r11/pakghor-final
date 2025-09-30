@@ -14,6 +14,8 @@ const AddCard: React.FC = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  const apiUrl = import.meta.env.VITE_API_URL;
+
   const handleSubmit = async () => {
     try {
       // await fetch("http://localhost:5000/api/cards", {
@@ -22,7 +24,12 @@ const AddCard: React.FC = () => {
       //   body: JSON.stringify(form),
       // });
 
-      await fetch("https://pakghor-final-658f.vercel.app/api/cards", {
+      // await fetch("https://pakghor-final-658f.vercel.app/api/cards", {
+      //   method: "POST",
+      //   headers: { "Content-Type": "application/json" },
+      //   body: JSON.stringify(form),
+      // });
+      await fetch(`${apiUrl}/cards`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),

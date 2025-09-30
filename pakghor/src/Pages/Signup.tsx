@@ -14,16 +14,25 @@ function Signup() {
 
   const navigate = useNavigate();
 
+  const apiUrl = import.meta.env.VITE_API_URL;
+
   const handleSignup = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     axios
 
-      .post("http://localhost:5000/api/register", {
+      .post(`${apiUrl}/register`, {
         username,
         email,
         mobile,
         password,
       })
+
+      // .post("http://localhost:5000/api/register", {
+      //   username,
+      //   email,
+      //   mobile,
+      //   password,
+      // })
       // .post("https://pakghor-final-658f.vercel.app/api/register", {
       //   username,
       //   email,

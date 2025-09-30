@@ -11,6 +11,7 @@ const AdminPanel: React.FC = () => {
     indicator: "",
   });
   const [editingId, setEditingId] = useState<string | null>(null);
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     fetchCards();
@@ -19,16 +20,18 @@ const AdminPanel: React.FC = () => {
   const fetchCards = async () => {
     // const res = await fetch("http://localhost:5000/api/cards");
 
-    const res = await fetch("https://pakghor-final-658f.vercel.app/api/cards");
+    // const res = await fetch("https://pakghor-final-658f.vercel.app/api/cards");
+    const res = await fetch(`${apiUrl}/cards`);
     const data = await res.json();
     setCards(data);
   };
 
   const handleSubmit = async () => {
     const method = editingId ? "PUT" : "POST";
-    const url = editingId
-      ? `http://localhost:5000/api/cards/${editingId}`
-      : "http://localhost:5000/api/cards";
+    // const url = editingId
+    //   ? `http://localhost:5000/api/cards/${editingId}`
+    //   : "http://localhost:5000/api/cards";
+    const url = editingId ? `${apiUrl}/cards/${editingId}` : `${apiUrl}/cards`;
 
     await fetch(url, {
       method,
@@ -42,7 +45,10 @@ const AdminPanel: React.FC = () => {
   };
 
   const handleDelete = async (id: string) => {
-    await fetch(`http://localhost:5000/api/cards/${id}`, { method: "DELETE" });
+    // await fetch(`http://localhost:5000/api/cards/${id}`, { method: "DELETE" });
+    await fetch(`${apiUrl}/cards/${id}`, {
+      method: "DELETE",
+    });
     setCards(cards.filter((c) => c._id !== id));
   };
 

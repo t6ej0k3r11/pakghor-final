@@ -16,11 +16,13 @@ interface Card {
 const ProductDetails = () => {
   const { id } = useParams();
   const [product, setProduct] = useState<Card | null>(null);
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     // fetch(`http://localhost:5000/api/cards/${id}`)
 
-    fetch(`https://pakghor-final-658f.vercel.app/api/cards/${id}`)
+    // fetch(`https://pakghor-final-658f.vercel.app/api/cards/${id}`)
+    fetch(`${apiUrl}/cards/${id}`)
       .then((res) => res.json())
       .then((data) => setProduct(data));
   }, [id]);
