@@ -2,7 +2,8 @@ import type { CardInterface } from "../types";
 import styles from "./Card.module.css";
 import Badge from "./Badge";
 import Button from "./Button";
-import { useNavigate, Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useCart } from "../context/CartContext";
 
 const Card = ({
   body,
@@ -14,29 +15,35 @@ const Card = ({
   link,
 }: CardInterface) => {
   const navigate = useNavigate();
-  const isLoggedIn = !!sessionStorage.getItem("token");
+  const { addToCart } = useCart();
 
-  const handleButtonClick = (e: React.MouseEvent) => {
+  const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
-    if (isLoggedIn) {
-      navigate("/checkout");
-    } else {
+
+    const price = Number(indicator?.replace(/[^0-9]/g, "")) || 0;
+
+    addToCart({
+      name: title,
+      price,
+      qty: 1,
+    });
+
+    if (!sessionStorage.getItem("token")) {
       navigate("/login");
+    } else {
+      alert(`${title} added to cart!`);
     }
   };
 
   return (
     <article className={`${styles.card} shadow-card`}>
       {indicator && <small className={styles.indicator}>{indicator}</small>}
-
       {badge && <Badge text={badge.text} filled={badge.filled} />}
-
       {image && (
         <Link to={link || "#"} className={styles.imageWrapper}>
           <img src={image} alt={title} className={styles.image} />
         </Link>
       )}
-
       <div className={styles.content}>
         <Link to={link || "#"} className={styles.titleLink}>
           <h3 className={styles.title}>{title}</h3>
@@ -44,14 +51,8 @@ const Card = ({
         {subtitle && <small className={styles.subtitle}>{subtitle}</small>}
         <p className={styles.body}>{body}</p>
 
-        <div onClick={handleButtonClick}>
-          <Button
-            text="Order Now"
-            filled={true}
-            type="primary"
-            to="#"
-            icon={null}
-          />
+        <div onClick={handleAddToCart}>
+          <Button text="Add to Cart" filled type="primary" to="#" icon={null} />
         </div>
       </div>
     </article>

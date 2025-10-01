@@ -13,30 +13,33 @@ import AddCard from "./Pages/Addcard";
 import AdminPanel from "./Pages/AdminPanel";
 import ProductDetails from "./Pages/ProductDetails";
 import Checkout from "./Pages/Checkout";
+import { CartProvider } from "./context/CartContext";
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path="home" element={<Home />} />
-          <Route path="about" element={<About />} />
-          <Route path="services" element={<Services />} />
-          <Route path="contact" element={<Contact />} />
-          <Route path="burger" element={<Burger />} />
-          <Route path="addcard" element={<AddCard />} />
-        </Route>
-        <Route path="signup" element={<Signup />} />
-        <Route path="login" element={<Login />} />
+    <CartProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Home />} />
+            <Route path="home" element={<Home />} />
+            <Route path="about" element={<About />} />
+            <Route path="services" element={<Services />} />
+            <Route path="contact" element={<Contact />} />
+            <Route path="burger" element={<Burger />} />
+            <Route path="addcard" element={<AddCard />} />
+          </Route>
+          <Route path="signup" element={<Signup />} />
+          <Route path="login" element={<Login />} />
 
-        <Route path="/" element={<Layout />}>
-          <Route path="admin" element={<AdminPanel />} />
-          <Route path="/product/:id" element={<ProductDetails />} />
-          <Route path="/checkout" element={<Checkout />} />
-        </Route>
-      </Routes>
-    </Router>
+          <Route path="/" element={<Layout />}>
+            <Route path="admin" element={<AdminPanel />} />
+            <Route path="/product/:id" element={<ProductDetails />} />
+            <Route path="/checkout" element={<Checkout />} />
+          </Route>
+        </Routes>
+      </Router>
+    </CartProvider>
   );
 }
 

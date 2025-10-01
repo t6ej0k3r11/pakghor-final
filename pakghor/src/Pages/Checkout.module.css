@@ -1,108 +1,75 @@
 .checkoutWrapper {
-  max-width: 700px;
-  margin: 2rem auto;
+  max-width: 900px;
+  margin: 2.5rem auto;
   padding: 2.5rem;
-  background: linear-gradient(180deg, #fff 0%, #fff9f7 100%);
-  border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
   font-family: "Poppins", sans-serif;
 }
 
 .pageTitle {
   text-align: center;
-  font-size: 2.2rem;
+  font-size: 2.6rem;
   font-weight: 800;
-  margin-bottom: 1.5rem;
-  color: #333;
+  margin-bottom: 2rem;
+  color: #111827;
+}
+
+/* Main container with grid layout */
+.checkoutContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.cart,
+.formWrapper {
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.07);
+  padding: 2rem;
+  transition: transform 0.2s ease;
+}
+
+.cart:hover,
+.formWrapper:hover {
+  transform: translateY(-4px);
 }
 
 /* Cart Summary */
-.cart {
-  background: #fff;
-  padding: 1.8rem;
-  border-radius: 12px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
-  margin-bottom: 2.5rem;
-}
-
-.cart h3 {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-  color: #374151;
-}
-
-.cart ul {
-  list-style: none;
-  padding: 0;
-  margin-bottom: 1rem;
-}
-
-.cart li {
-  font-size: 1rem;
-  margin-bottom: 0.5rem;
-  color: #555;
-}
-
-.cart strong {
-  font-size: 1.1rem;
-  color: #111;
-}
-
-/* Form */
-.formWrapper {
-  background: #fff;
-  padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
-}
-
+.cart h3,
 .formWrapper h3 {
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   margin-bottom: 1rem;
-  color: #333;
-  text-align: left;
+  color: #1f2937;
 }
 
-.form input,
-.form select {
-  width: 100%;
-  padding: 0.9rem 1rem;
-  margin-bottom: 1.2rem;
-  border-radius: 8px;
-  border: 1px solid #d1d5db;
-  font-size: 1rem;
-  transition: border 0.2s ease, box-shadow 0.2s ease;
+.emptyCart {
+  text-align: center;
+  font-style: italic;
+  color: #9ca3af;
 }
-
-.form input:focus,
-.form select:focus {
-  border-color: #f7e169;
-  box-shadow: 0 0 0 3px rgba(247, 225, 105, 0.2);
-  outline: none;
-}
-
-/* Responsive */
-@media (max-width: 640px) {
-  .checkoutWrapper {
-    padding: 1.5rem;
-  }
-
-  .pageTitle {
-    font-size: 1.8rem;
-  }
-
-  .formWrapper h3 {
-    font-size: 1.3rem;
-  }
-}
-
 
 .cartItem {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  gap: 1rem;
-  margin-bottom: 1rem;
+  align-items: center;
+  padding: 0.8rem 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.itemInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.itemName {
+  font-weight: 600;
+  color: #111827;
+}
+
+.itemPrice {
+  font-weight: 500;
+  color: #6b7280;
+  margin-top: 4px;
 }
 
 .qtyControl {
@@ -112,23 +79,81 @@
 }
 
 .qtyBtn {
-  width: 28px;
-  height: 28px;
+  width: 36px;
+  height: 36px;
   border: none;
-  border-radius: 6px;
-  background-color: #ff5722;
+  border-radius: 10px;
+  background: #f97316;
   color: #fff;
-  font-weight: bold;
+  font-weight: 700;
   cursor: pointer;
   transition: 0.2s;
 }
 
 .qtyBtn:hover {
-  background-color: #e64a19;
+  background: #ea580c;
 }
 
 .qtyNumber {
-  min-width: 24px;
+  min-width: 30px;
   text-align: center;
   font-weight: 600;
+  color: #111827;
+}
+
+.removeBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.3rem;
+  color: #ef4444;
+  margin-left: 6px;
+  transition: transform 0.2s;
+}
+
+.removeBtn:hover {
+  transform: scale(1.2);
+}
+
+/* Total */
+.totalWrapper {
+  margin-top: 1rem;
+  text-align: right;
+}
+
+.total {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #111827;
+}
+
+/* Form */
+.form input,
+.form select {
+  width: 100%;
+  padding: 1rem;
+  margin-bottom: 1.2rem;
+  border-radius: 12px;
+  border: 1px solid #d1d5db;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  background: #f9fafb;
+}
+
+.form input:focus,
+.form select:focus {
+  border-color: #f97316;
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.2);
+  outline: none;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .checkoutContainer {
+    grid-template-columns: 1fr;
+  }
+
+  .pageTitle {
+    font-size: 2.2rem;
+  }
 }

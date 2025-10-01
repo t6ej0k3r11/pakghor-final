@@ -22,4 +22,5 @@ export interface CardInterface {
   body: string,
   btn: ButtonInterface
   link?: string;
+  price?: number;
 }

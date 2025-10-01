@@ -1,29 +1,32 @@
 import { useState } from "react";
 import { NavLink, Link, useNavigate } from "react-router-dom";
+import { useCart } from "../context/CartContext";
 import logo from "../assets/logo.jpg";
 import "./Navbar.css";
 
 interface NavBarProps {
   brandName: string;
   navItems: string[];
-  logoSrc: string;
 }
 
 const NavBar = ({ brandName, navItems }: NavBarProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const storedAuthToken = sessionStorage.getItem("token");
   const navigate = useNavigate();
-  const isLoggedIn = !!storedAuthToken;
+  const isLoggedIn = !!sessionStorage.getItem("token");
+
+  const { cart } = useCart();
+  const cartCount = cart.reduce((sum, item) => sum + item.qty, 0);
+
+  const toggleMenu = () => setIsOpen((prev) => !prev);
 
   const handleLogout = () => {
     sessionStorage.removeItem("token");
     navigate("/");
-    setIsOpen(false); // close mobile menu
+    setIsOpen(false);
   };
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: implement search logic
     alert("Search functionality coming soon!");
   };
 
@@ -33,17 +36,20 @@ const NavBar = ({ brandName, navItems }: NavBarProps) => {
   return (
     <nav className="navbar-modern">
       <div className="navbar-container">
+        {/* Brand Logo */}
         <Link to="/" className="brand">
           <img src={logo} alt="Logo" />
           <span>{brandName}</span>
         </Link>
 
-        <button className="hamburger" onClick={() => setIsOpen(!isOpen)}>
+        {/* Mobile Hamburger */}
+        <button className="hamburger" onClick={toggleMenu} aria-label="Menu">
           <span></span>
           <span></span>
           <span></span>
         </button>
 
+        {/* Nav items */}
         <div className={`nav-items ${isOpen ? "open" : ""}`}>
           <ul>
             {navItems.map((item) => (
@@ -59,11 +65,25 @@ const NavBar = ({ brandName, navItems }: NavBarProps) => {
             ))}
           </ul>
 
+          {/* Search Bar */}
           <form className="navbar-search" onSubmit={handleSearch}>
             <input type="search" placeholder="Search..." />
             <button type="submit">Go</button>
           </form>
 
+          {/* Cart Button */}
+          <div className="cart-wrapper">
+            <Link
+              to={isLoggedIn ? "/checkout" : "/login"}
+              className="cart-button"
+              onClick={() => setIsOpen(false)}
+            >
+              🛒
+              {cartCount > 0 && <span className="cart-count">{cartCount}</span>}
+            </Link>
+          </div>
+
+          {/* Auth Buttons */}
           <div className="auth-buttons">
             {!isLoggedIn ? (
               <>
