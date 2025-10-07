@@ -1,126 +1,145 @@
 .landing {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
   font-family: "Poppins", sans-serif;
-  background: linear-gradient(120deg, #fffdf5, #fff7f0);
-  color: #222;
+  background: #000;
   overflow: hidden;
+  color: #fff;
 }
 
-/* Hero Section */
+
 .hero {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 4rem 8%;
-  min-height: 90vh;
-  gap: 2rem;
+  padding: 5rem 3rem;
+  flex-wrap: wrap;
+  position: relative;
+  overflow: hidden;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #000000, #1a1a1a);
 }
 
-.text {
+
+.heroImage {
   flex: 1;
+  min-width: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 1;
 }
 
-.text h1 {
+.heroImage img {
+  width: 100%;
+  max-width: 500px;
+  border-radius: 30px;
+  object-fit: cover;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.heroImage img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 35px 70px rgba(0, 0, 0, 0.3);
+}
+
+
+.content {
+  flex: 1;
+  min-width: 300px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.5rem;
+  opacity: 0;
+  transform: translateY(50px);
+  animation: fadeInUp 1.2s forwards 0.3s;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.heroTitle {
   font-size: 3rem;
-  font-weight: 800;
-  line-height: 1.2;
+  font-weight: 900;
   margin-bottom: 1rem;
+  line-height: 1.2;
+
+  background: linear-gradient(90deg, #ff9100, #ff5722, #ff3d00);
+  color: #ff9100; 
+  background-clip: text; 
+  -webkit-background-clip: text; 
+  -webkit-text-fill-color: transparent;
+
+  animation: shimmer 5s linear infinite;
+  text-shadow: 2px 2px 20px rgba(255, 87, 34, 0.8);
+}
+
+@keyframes shimmer {
+  0% { background-position: -500px 0; }
+  100% { background-position: 500px 0; }
 }
 
 .brand {
-  font-weight: 700;
-  background: linear-gradient(90deg, #ff7e5f, #f7e169);
-  -webkit-background-clip: text; 
-  -webkit-text-fill-color: transparent; 
-  background-clip: text; 
-  color: transparent; 
+  font-size: 3.5rem;
+  font-weight: 900;
 }
 
-
-.text p {
-  font-size: 1.2rem;
-  color: #555;
-  margin-bottom: 2rem;
-  max-width: 450px;
+.heroText {
+  font-size: 1.3rem;
+  color: #ffd699;
+  text-shadow: 0 0 8px #ff9100, 0 0 20px #ff5722, 0 0 30px #ff3d00;
 }
+
 
 .buttons {
   display: flex;
   gap: 1rem;
+  flex-wrap: wrap;
 }
 
-.primaryBtn,
-.secondaryBtn {
-  text-decoration: none;
-  padding: 0.9rem 1.6rem;
-  border-radius: 8px;
-  font-weight: 600;
-  transition: 0.25s ease;
-}
-
-/* Buttons */
-.primaryBtn {
-  background: #ff5722;
-  color: white;
-}
-
-.primaryBtn:hover {
-  background: #e64a19;
-}
-
-.secondaryBtn {
-  background: #f7e169;
-  color: #222;
-}
-
-.secondaryBtn:hover {
-  background: #efd94a;
-}
-
-/* Image */
-.image img {
-  width: 400px;
-  max-width: 100%;
-  border-radius: 18px;
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
-  transform: rotate(3deg);
-  transition: transform 0.3s ease;
-}
-
-.image img:hover {
-  transform: rotate(0deg) scale(1.05);
-}
-
-/* Footer */
 .footer {
   text-align: center;
-  padding: 1.5rem;
-  background: #111;
-  color: #eee;
-  font-size: 0.9rem;
-  letter-spacing: 0.5px;
+  padding: 2rem;
+  background: linear-gradient(90deg, #ff5722, #ff9100, #ff6f3c);
+  color: #fff;
+  font-weight: 600;
+  margin-top: auto;
+  border-radius: 0;
+  box-shadow: 0 -5px 25px rgba(255, 87, 34, 0.2);
 }
 
-/* Responsive */
-@media (max-width: 768px) {
+
+@media (max-width: 900px) {
   .hero {
-    flex-direction: column;
+    flex-direction: column-reverse;
+    padding: 3rem 1rem;
+    min-height: auto;
+    gap: 2rem;
+  }
+
+  .heroTitle {
+    font-size: 2.2rem;
     text-align: center;
-    padding: 3rem 5%;
   }
 
-  .text h1 {
-    font-size: 2.4rem;
-  }
-
-  .text p {
-    margin: 0 auto 2rem;
+  .heroText {
+    text-align: center;
   }
 
   .buttons {
     justify-content: center;
   }
 
-  .image img {
-    width: 300px;
+  .heroImage img {
+    max-width: 80%;
   }
 }

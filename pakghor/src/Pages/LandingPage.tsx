@@ -1,34 +1,47 @@
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 import styles from "./LandingPage.module.css";
-import heroImg from "../assets/burger.jpg";
+import Button from "../components/Button";
+import heroImg from "../assets/pakghor.jpg"; // replace with your image
 
 const LandingPage = () => {
+  const [particles, setParticles] = useState<number[]>([]);
+
+  useEffect(() => {
+    setParticles(Array.from({ length: 30 }, (_, i) => i));
+  }, []);
+
   return (
     <section className={styles.landing}>
       <div className={styles.hero}>
-        <div className={styles.text}>
-          <h1>
+        <div className={styles.particles}>
+          {particles.map((p) => (
+            <div key={p} className={styles.particle}></div>
+          ))}
+        </div>
+
+        <div className={styles.content}>
+          <h1 className={styles.heroTitle}>
             Welcome to <span className={styles.brand}>Pakghor</span>
           </h1>
-          <p>
-            Delicious street-style fast food made fresh every day in Mymensingh.
+          <p className={styles.heroText}>
+            Fresh, street-style fast food made with love in Mymensingh.
           </p>
           <div className={styles.buttons}>
-            <Link to="/app/home" className={styles.primaryBtn}>
-              See Menu
-            </Link>
-            <Link to="/app/checkout" className={styles.secondaryBtn}>
-              Order Now
-            </Link>
+            <Button text="See Menu" type="primary" filled to="/app/home" />
+            <Button
+              text="Order Now"
+              type="secondary"
+              filled
+              to="/app/checkout"
+            />
           </div>
         </div>
 
-        <div className={styles.image}>
-          <img src={heroImg} alt="Pakghor Special Burger" />
+        <div className={styles.heroImage}>
+          <img src={heroImg} alt="Pakghor Special" />
         </div>
       </div>
 
-      {/* Footer */}
       <footer className={styles.footer}>
         <p>
           © {new Date().getFullYear()} Pakghor — Mymensingh’s Favorite Street
