@@ -26,14 +26,13 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const addToCart = (item: Omit<CartItem, "id">) => {
     setCart((prev) => {
-      // Check if same product already exists by name
       const existing = prev.find((p) => p.name === item.name);
       if (existing) {
         return prev.map((p) =>
           p.name === item.name ? { ...p, qty: p.qty + item.qty } : p
         );
       }
-      return [...prev, { ...item, id: uuidv4() }]; // generate unique ID
+      return [...prev, { ...item, id: uuidv4() }];
     });
   };
 

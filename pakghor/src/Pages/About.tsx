@@ -31,7 +31,6 @@ const About: React.FC = () => {
 
   return (
     <div className="about-wrapper">
-      {/* Hero Section */}
       <section className="about-hero">
         <h1 className="about-title">
           About <span>Pakghor</span>
@@ -42,7 +41,6 @@ const About: React.FC = () => {
         </p>
       </section>
 
-      {/* About Cards */}
       <section className="about-grid">
         {aboutCards.map((card, index) => (
           <div key={index} className="about-card">

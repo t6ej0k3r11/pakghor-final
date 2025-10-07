@@ -46,10 +46,10 @@
   font-weight: 700;
   margin-bottom: 0.3rem;
   background: linear-gradient(90deg, #f7e169, #ff7e5f);
-  background-clip: text;           /* standard property */
-  -webkit-background-clip: text;   /* for Safari */
-  -webkit-text-fill-color: transparent; /* for Safari */
-  color: transparent;              /* fallback for other browsers */
+  background-clip: text;         
+  -webkit-background-clip: text;  
+  -webkit-text-fill-color: transparent;
+  color: transparent;              
 }
 
 .subtitle {

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import styles from "./LandingPage.module.css";
 import Button from "../components/Button";
-import heroImg from "../assets/pakghor.jpg"; // replace with your image
+import heroImg from "../assets/pakghor.jpg";
 
 const LandingPage = () => {
   const [particles, setParticles] = useState<number[]>([]);

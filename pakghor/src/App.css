@@ -1,4 +1,4 @@
-/* Root App Container */
+
 .App {
   display: grid;
   place-items: center;
@@ -8,7 +8,7 @@
   background-color: #fdfdfd;
 }
 
-/* Card Grid Container */
+
 .card-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -19,7 +19,7 @@
   width: 100%;
 }
 
-/* Responsive adjustments */
+
 @media (max-width: 600px) {
   .card-container {
     grid-template-columns: 1fr;
@@ -31,14 +31,14 @@
   }
 }
 
-/* Card Hover Effects */
+
 .card:hover {
   transform: translateY(-8px);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
   transition: all 0.3s ease;
 }
 
-/* Brand Name Gradient */
+
 .brand-name {
   font-size: 1.8rem;
   font-weight: 700;
@@ -47,7 +47,7 @@
   display: inline-block;
   background: linear-gradient(90deg, #f7e169, #ff7e5f);
   
-  /* Modern syntax */
+  
   background-clip: text;
   -webkit-background-clip: text; /* Safari/Chrome */
   color: transparent; /* fallback for non-supporting browsers */
@@ -56,7 +56,7 @@
   transition: all 0.3s ease;
 }
 
-/* Navbar Links */
+
 .navbar-nav .nav-item .nav-link {
   padding: 0.6rem 1rem;
   border-radius: 6px;
@@ -76,7 +76,7 @@
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
 }
 
-/* Navbar Search */
+
 .navbar-search {
   display: flex;
   align-items: center;
@@ -110,7 +110,7 @@
   transform: scale(1.2);
 }
 
-/* Navbar Buttons */
+
 .navbar .d-flex.gap-2 {
   margin-left: auto;
 }
@@ -131,7 +131,7 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-/* Filled Button Variant */
+
 .nav-button.filled {
   background: linear-gradient(90deg, #f7e169, #ff7e5f);
   color: #fff;

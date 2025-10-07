@@ -1,4 +1,4 @@
-/* Navbar container */
+
 .navbar-modern {
   background: linear-gradient(90deg, #f7e169, #ff7e5f);
   padding: 0.5rem 1rem;
@@ -9,7 +9,7 @@
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
 }
 
-/* Flex container inside navbar */
+
 .navbar-container {
   display: flex;
   align-items: center;
@@ -18,7 +18,7 @@
   margin: auto;
 }
 
-/* Brand logo and name */
+
 .brand {
   display: flex;
   align-items: center;
@@ -37,7 +37,6 @@
   object-fit: cover;
 }
 
-/* Hamburger menu for mobile */
 .hamburger {
   display: none;
   flex-direction: column;
@@ -54,14 +53,14 @@
   border-radius: 2px;
 }
 
-/* Nav items container */
+
 .nav-items {
   display: flex;
   align-items: center;
   gap: 1rem;
 }
 
-/* Nav list */
+
 .nav-items ul {
   display: flex;
   gap: 1rem;
@@ -70,7 +69,7 @@
   margin: 0;
 }
 
-/* Nav links */
+
 .nav-items li a {
   text-decoration: none;
   color: #fff;
@@ -86,7 +85,7 @@
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
-/* Search box */
+
 .navbar-search {
   display: flex;
   align-items: center;
@@ -117,7 +116,7 @@
   color: #333;
 }
 
-/* Auth buttons */
+
 .nav-button {
   padding: 0.5rem 1rem;
   border-radius: 12px;
@@ -136,7 +135,7 @@
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
-/* Responsive: mobile menu */
+
 @media (max-width: 900px) {
   .hamburger {
     display: flex;
@@ -166,14 +165,14 @@
     width: 100%;
   }
 }
-/* Highlight active page */
+
 .nav-active {
   background: rgba(255, 255, 255, 0.3);
   border-radius: 12px;
   font-weight: 600;
 }
 
-/* Responsive fixes */
+
 @media (max-width: 900px) {
   .auth-buttons {
     display: flex;

@@ -13,7 +13,7 @@
   margin-bottom: 2rem;
 }
 
-/* Section style */
+
 .admin-section {
   background: #fff;
   border-radius: 15px;
@@ -32,7 +32,7 @@
   padding-bottom: 0.3rem;
 }
 
-/* Form styling */
+
 .admin-form {
   display: grid;
   grid-template-columns: 1fr;
@@ -76,7 +76,7 @@
   box-shadow: 0 5px 15px rgba(255, 126, 95, 0.3);
 }
 
-/* Table styling */
+
 .table-wrapper {
   overflow-x: auto;
 }
@@ -147,14 +147,14 @@
   transform: translateY(-2px);
 }
 
-/* Responsive */
+
 @media (max-width: 768px) {
   .admin-form {
     grid-template-columns: 1fr;
   }
 }
 
-/* Card Preview Section */
+
 .preview-section {
   margin-bottom: 2rem;
 }
@@ -181,10 +181,10 @@
   font-size: 1.25rem;
   font-weight: 700;
   background: linear-gradient(90deg, #f7e169, #ff7e5f);
-  color: transparent; /* fallback for browsers without -webkit-text-fill-color */
-  background-clip: text; /* standard property */
-  -webkit-background-clip: text; /* Safari/Chrome */
-  -webkit-text-fill-color: transparent; /* Safari/Chrome */
+  color: transparent; 
+  background-clip: text; 
+  -webkit-background-clip: text; 
+  -webkit-text-fill-color: transparent; 
 }
 
 

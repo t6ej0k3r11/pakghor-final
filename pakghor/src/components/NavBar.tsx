@@ -37,20 +37,17 @@ const NavBar = ({ brandName, navItems }: NavBarProps) => {
   return (
     <nav className="navbar-modern">
       <div className="navbar-container">
-        {/* Brand Logo */}
         <Link to="/" className="brand">
           <img src={logo} alt="Logo" />
           <span>{brandName}</span>
         </Link>
 
-        {/* Mobile Hamburger */}
         <button className="hamburger" onClick={toggleMenu} aria-label="Menu">
           <span></span>
           <span></span>
           <span></span>
         </button>
 
-        {/* Nav items */}
         <div className={`nav-items ${isOpen ? "open" : ""}`}>
           <ul>
             {navItems.map((item) => (
@@ -66,13 +63,11 @@ const NavBar = ({ brandName, navItems }: NavBarProps) => {
             ))}
           </ul>
 
-          {/* Search Bar */}
           <form className="navbar-search" onSubmit={handleSearch}>
             <input type="search" placeholder="Search..." />
             <button type="submit">Go</button>
           </form>
 
-          {/* Cart Button */}
           <div className="cart-wrapper">
             <Link
               to={isLoggedIn ? "/app/checkout" : "/login"}
@@ -84,7 +79,6 @@ const NavBar = ({ brandName, navItems }: NavBarProps) => {
             </Link>
           </div>
 
-          {/* Auth Buttons */}
           <div className="auth-buttons">
             {!isLoggedIn ? (
               <>

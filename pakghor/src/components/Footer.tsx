@@ -1,4 +1,4 @@
-import { FacebookIcon, InstagramIcon, TwitterIcon } from "lucide-react"; // modern icons
+import { FacebookIcon, InstagramIcon, TwitterIcon } from "lucide-react";
 import "./Footer.css";
 
 const Footer = () => {

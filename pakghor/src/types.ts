@@ -8,7 +8,7 @@ export interface ButtonInterface {
   text: string;
   filled: boolean;
   type: "primary" | "secondary" | "danger";
-  to?: string;   // ✅ React Router link
+  to?: string;   
   icon?: React.ReactNode;
 }
 
