@@ -45,7 +45,7 @@ function Home() {
           }}
           indicator="180tk"
           subtitle="Double cheese • Flame-grilled perfection "
-          link="/burger"
+          link="burger"
           btn={{
             text: "Order Now",
             to: "#",
@@ -64,10 +64,10 @@ function Home() {
             badge={card.badge}
             indicator={card.indicator}
             subtitle={card.subtitle}
-            link={`/product/${card._id}`}
+            link={`product/${card._id}`}
             btn={{
               text: "Order Now",
-              to: `/product/${card._id}`,
+              to: `product/${card._id}`,
               type: "primary",
               filled: true,
               icon: <PaperAirplaneIcon />,

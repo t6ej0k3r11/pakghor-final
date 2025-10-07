@@ -40,12 +40,12 @@ const Card = ({
       {indicator && <small className={styles.indicator}>{indicator}</small>}
       {badge && <Badge text={badge.text} filled={badge.filled} />}
       {image && (
-        <Link to={link || "#"} className={styles.imageWrapper}>
+        <Link to={link ? `/app/${link}` : "#"} className={styles.imageWrapper}>
           <img src={image} alt={title} className={styles.image} />
         </Link>
       )}
       <div className={styles.content}>
-        <Link to={link || "#"} className={styles.titleLink}>
+        <Link to={link ? `/app/${link}` : "#"} className={styles.titleLink}>
           <h3 className={styles.title}>{title}</h3>
         </Link>
         {subtitle && <small className={styles.subtitle}>{subtitle}</small>}

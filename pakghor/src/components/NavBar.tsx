@@ -32,7 +32,7 @@ const NavBar = ({ brandName, navItems }: NavBarProps) => {
   };
 
   const getPath = (item: string) =>
-    item.toLowerCase() === "home" ? "/" : `/${item.toLowerCase()}`;
+    item.toLowerCase() === "home" ? "/app/home" : `/app/${item.toLowerCase()}`;
 
   return (
     <nav className="navbar-modern">
@@ -75,7 +75,7 @@ const NavBar = ({ brandName, navItems }: NavBarProps) => {
           {/* Cart Button */}
           <div className="cart-wrapper">
             <Link
-              to={isLoggedIn ? "/checkout" : "/login"}
+              to={isLoggedIn ? "/app/checkout" : "/login"}
               className="cart-button"
               onClick={() => setIsOpen(false)}
             >

@@ -58,7 +58,7 @@ function Signup() {
   return (
     <div className="signup-container">
       <div className="signup-box">
-        <Link to="/home">
+        <Link to="/app/home">
           <img src={logo} alt="Pakghor Logo" className="signup-logo" />
         </Link>
         <h2>Create Account</h2>

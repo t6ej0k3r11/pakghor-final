@@ -9,7 +9,7 @@ const cardSchema = new mongoose.Schema({
     text: String,
     filled: Boolean,
   },
-  indicator: { type: String }, // price or status
+  indicator: { type: String },
   btn: {
     text: String,
     href: String,

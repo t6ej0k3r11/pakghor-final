@@ -40,9 +40,9 @@ const Login: React.FC = () => {
 
         setTimeout(() => {
           if (data.username && data.username.startsWith("a-")) {
-            navigate("/admin");
+            navigate("/app/admin");
           } else {
-            navigate("/Home");
+            navigate("/app/Home");
           }
         }, 1500);
       } else {
@@ -56,7 +56,7 @@ const Login: React.FC = () => {
   return (
     <div className="login-wrapper">
       <div className="login-card">
-        <Link to="/home">
+        <Link to="/app/home">
           <img src={logo} alt="Pakghor Logo" className="login-logo" />
         </Link>
         <h2 className="login-title">Welcome Back 👋</h2>
