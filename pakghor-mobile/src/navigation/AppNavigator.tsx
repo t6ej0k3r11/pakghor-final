@@ -13,6 +13,7 @@ import AddCardScreen from "../screens/AddCardScreen"; // ✅ Capital 'C'
 import AdminPanelScreen from "../screens/AdminPanelScreen";
 import ProductDetailsScreen from "../screens/ProductDetailsScreen";
 import CheckoutScreen from "../screens/CheckoutScreen";
+import LandingPage from "../screens/LandingPage";
 
 const Stack = createNativeStackNavigator();
 
@@ -20,11 +21,12 @@ export default function AppNavigator() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Home"
+        initialRouteName="LandingPage"
         screenOptions={{
           headerShown: false, // hide top bar if not needed
         }}
       >
+        <Stack.Screen name="LandingPage" component={LandingPage} />
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="About" component={AboutScreen} />
         <Stack.Screen name="Services" component={ServicesScreen} />

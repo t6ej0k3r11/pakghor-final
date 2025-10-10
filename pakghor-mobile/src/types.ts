@@ -26,6 +26,7 @@ export interface BadgeInterface {
 
 // Cart item (used in context)
 export interface CartItem {
+  id: string;
   name: string;
   price: number;
   qty: number;

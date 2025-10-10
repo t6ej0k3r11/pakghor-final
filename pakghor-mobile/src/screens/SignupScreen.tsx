@@ -9,12 +9,96 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
+  Dimensions,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
 
 const Signup = () => {
+  const { width } = Dimensions.get("window");
+  const isLargeScreen = width > 400;
+
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: "#fdfdfd",
+      alignItems: "center",
+      justifyContent: "center",
+      paddingHorizontal: width * 0.05,
+    },
+    box: {
+      backgroundColor: "#fff",
+      padding: isLargeScreen ? 30 : 25,
+      borderRadius: 15,
+      width: "90%",
+      maxWidth: 400,
+      alignSelf: "center",
+      alignItems: "center",
+      shadowColor: "#000",
+      shadowOpacity: 0.15,
+      shadowRadius: 10,
+      elevation: 8,
+    },
+    logo: {
+      width: isLargeScreen ? 100 : 90,
+      height: isLargeScreen ? 100 : 90,
+      borderRadius: isLargeScreen ? 50 : 45,
+      marginBottom: 20,
+    },
+    title: {
+      fontSize: isLargeScreen ? 26 : 22,
+      fontWeight: "600",
+      color: "#333",
+      marginBottom: 20,
+    },
+    input: {
+      width: "100%",
+      backgroundColor: "#fff",
+      borderWidth: 1,
+      borderColor: "#ddd",
+      borderRadius: 12,
+      paddingVertical: 14,
+      paddingHorizontal: 18,
+      fontSize: isLargeScreen ? 18 : 16,
+      marginBottom: 15,
+    },
+    signupBtn: {
+      width: "100%",
+      paddingVertical: 16,
+      borderRadius: 12,
+      alignItems: "center",
+      justifyContent: "center",
+      marginTop: 8,
+    },
+    signupText: {
+      color: "#fff",
+      fontSize: isLargeScreen ? 18 : 16,
+      fontWeight: "600",
+    },
+    loginBtn: {
+      width: "100%",
+      paddingVertical: 16,
+      borderRadius: 12,
+      backgroundColor: "#333",
+      alignItems: "center",
+      justifyContent: "center",
+      marginTop: 15,
+    },
+    loginText: {
+      color: "#fff",
+      fontSize: isLargeScreen ? 16 : 14,
+      fontWeight: "500",
+    },
+    msg: {
+      marginTop: 20,
+      fontSize: isLargeScreen ? 16 : 15,
+      fontWeight: "500",
+      color: "#28a745",
+    },
+  });
+
   const [username, setUser] = useState("");
   const [email, setEmail] = useState("");
   const [mobile, setMobile] = useState("");
@@ -53,156 +137,81 @@ const Signup = () => {
   };
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : undefined}
-      style={styles.container}
-    >
-      <ScrollView
-        contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
-        showsVerticalScrollIndicator={false}
+    <SafeAreaView style={{ flex: 1 }}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : undefined}
+        style={styles.container}
       >
-        <View style={styles.box}>
-          <Image
-            source={require("../assets/logo.jpg")}
-            style={styles.logo}
-            resizeMode="cover"
-          />
+        <ScrollView
+          contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
+          showsVerticalScrollIndicator={false}
+        >
+          <View style={styles.box}>
+            <Image
+              source={require("../assets/logo.jpg")}
+              style={styles.logo}
+              resizeMode="cover"
+            />
 
-          <Text style={styles.title}>Create Account</Text>
+            <Text style={styles.title}>Create Account</Text>
 
-          <TextInput
-            style={styles.input}
-            placeholder="Full Name"
-            value={username}
-            onChangeText={setUser}
-          />
+            <TextInput
+              style={styles.input}
+              placeholder="Full Name"
+              value={username}
+              onChangeText={setUser}
+            />
 
-          <TextInput
-            style={styles.input}
-            placeholder="Email Address"
-            keyboardType="email-address"
-            value={email}
-            onChangeText={setEmail}
-          />
+            <TextInput
+              style={styles.input}
+              placeholder="Email Address"
+              keyboardType="email-address"
+              value={email}
+              onChangeText={setEmail}
+            />
 
-          <TextInput
-            style={styles.input}
-            placeholder="Mobile Number"
-            keyboardType="phone-pad"
-            value={mobile}
-            onChangeText={setMobile}
-          />
+            <TextInput
+              style={styles.input}
+              placeholder="Mobile Number"
+              keyboardType="phone-pad"
+              value={mobile}
+              onChangeText={setMobile}
+            />
 
-          <TextInput
-            style={styles.input}
-            placeholder="Password"
-            secureTextEntry
-            value={password}
-            onChangeText={setPass}
-          />
+            <TextInput
+              style={styles.input}
+              placeholder="Password"
+              secureTextEntry
+              value={password}
+              onChangeText={setPass}
+            />
 
-          {/* Gradient Button */}
-          <TouchableOpacity onPress={handleSignup} activeOpacity={0.9}>
-            <LinearGradient
-              colors={["#f7e169", "#ff7e5f"]}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 1 }}
-              style={styles.signupBtn}
+            {/* Gradient Button */}
+            <TouchableOpacity onPress={handleSignup} activeOpacity={0.9}>
+              <LinearGradient
+                colors={["#f7e169", "#ff7e5f"]}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+                style={styles.signupBtn}
+              >
+                <Text style={styles.signupText}>Sign Up</Text>
+              </LinearGradient>
+            </TouchableOpacity>
+
+            {/* Secondary Button */}
+            <TouchableOpacity
+              style={styles.loginBtn}
+              onPress={() => navigation.navigate("Login" as never)}
             >
-              <Text style={styles.signupText}>Sign Up</Text>
-            </LinearGradient>
-          </TouchableOpacity>
+              <Text style={styles.loginText}>Log In</Text>
+            </TouchableOpacity>
 
-          {/* Secondary Button */}
-          <TouchableOpacity
-            style={styles.loginBtn}
-            onPress={() => navigation.navigate("Login" as never)}
-          >
-            <Text style={styles.loginText}>Log In</Text>
-          </TouchableOpacity>
-
-          {msg ? <Text style={styles.msg}>{msg}</Text> : null}
-        </View>
-      </ScrollView>
-    </KeyboardAvoidingView>
+            {msg ? <Text style={styles.msg}>{msg}</Text> : null}
+          </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 };
 
 export default Signup;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fdfdfd",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  box: {
-    backgroundColor: "#fff",
-    padding: 25,
-    borderRadius: 15,
-    width: "85%",
-    alignSelf: "center",
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOpacity: 0.15,
-    shadowRadius: 10,
-    elevation: 8,
-  },
-  logo: {
-    width: 90,
-    height: 90,
-    borderRadius: 45,
-    marginBottom: 15,
-  },
-  title: {
-    fontSize: 22,
-    fontWeight: "600",
-    color: "#333",
-    marginBottom: 15,
-  },
-  input: {
-    width: "100%",
-    backgroundColor: "#fff",
-    borderWidth: 1,
-    borderColor: "#ddd",
-    borderRadius: 10,
-    paddingVertical: 12,
-    paddingHorizontal: 15,
-    fontSize: 16,
-    marginBottom: 12,
-  },
-  signupBtn: {
-    width: "100%",
-    paddingVertical: 14,
-    borderRadius: 10,
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 5,
-  },
-  signupText: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "600",
-  },
-  loginBtn: {
-    width: "100%",
-    paddingVertical: 14,
-    borderRadius: 10,
-    backgroundColor: "#333",
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 12,
-  },
-  loginText: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "500",
-  },
-  msg: {
-    marginTop: 15,
-    fontSize: 15,
-    fontWeight: "500",
-    color: "#28a745",
-  },
-});

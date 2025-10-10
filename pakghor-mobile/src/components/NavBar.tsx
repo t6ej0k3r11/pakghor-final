@@ -10,7 +10,8 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useCart } from "../context/CartContext";
-const logo = require("../../assets/logo.jpg");
+import { useAuth } from "../context/AuthContext";
+const logo = require("../assets/logo.jpg");
 
 interface NavBarProps {
   brandName: string;
@@ -22,13 +23,13 @@ const NavBar = ({ brandName, navItems }: NavBarProps) => {
   const [searchText, setSearchText] = useState("");
   const navigation = useNavigation<any>();
   const { cart } = useCart();
+  const { isLoggedIn, logout } = useAuth();
   const cartCount = cart.reduce((sum, item) => sum + item.qty, 0);
-  const isLoggedIn = !!cart; // Replace with your auth check logic
 
   const toggleMenu = () => setIsOpen((prev) => !prev);
 
-  const handleLogout = () => {
-    // Replace with your auth logout logic
+  const handleLogout = async () => {
+    await logout();
     setIsOpen(false);
     navigation.navigate("Home");
   };
@@ -48,7 +49,7 @@ const NavBar = ({ brandName, navItems }: NavBarProps) => {
         {/* Logo */}
         <TouchableOpacity
           style={styles.brand}
-          onPress={() => navigation.navigate("Home")}
+          onPress={() => navigation.navigate("LandingPage")}
         >
           <Image source={logo} style={styles.logo} />
           <Text style={styles.brandText}>{brandName}</Text>

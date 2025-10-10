@@ -9,13 +9,22 @@ interface ButtonProps {
   type?: "primary" | "secondary";
   to?: string;
   icon?: React.ReactNode;
+  onPress?: () => void;
 }
 
-const Button = ({ text, filled, type = "primary", to, icon }: ButtonProps) => {
+const Button = ({
+  text,
+  filled,
+  type = "primary",
+  to,
+  icon,
+  onPress,
+}: ButtonProps) => {
   const navigation = useNavigation<any>();
 
   const handlePress = () => {
-    if (to) navigation.navigate(to);
+    if (onPress) onPress();
+    else if (to) navigation.navigate(to);
   };
 
   // Base content inside the button

@@ -2,8 +2,7 @@ import axios from "axios";
 
 // ======== Base Configuration ========
 // Change this URL to your backend API (example: render/vercel/localhost)
-const API_BASE_URL = "https://pakghor-final-658f.vercel.app/api";
-// OR use: const API_BASE_URL = process.env.EXPO_PUBLIC_API_URL;
+const API_BASE_URL = process.env.EXPO_PUBLIC_API_URL;
 
 const api = axios.create({
   baseURL: API_BASE_URL,

@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
-import { useCart } from "../context/CartContext";
+import { useCart, CartItem } from "../context/CartContext";
 import type { CardInterface } from "../types";
 import Button from "./Button";
 import Badge from "./Badge";
@@ -22,22 +22,27 @@ const Card = ({
   indicator,
   subtitle,
   link,
-}: CardInterface) => {
+  onPress,
+  showAddToCart = true,
+}: CardInterface & { onPress?: () => void; showAddToCart?: boolean }) => {
   const navigation = useNavigation<any>();
-  const { addToCart } = useCart();
+  const { cart, addToCart } = useCart();
 
   const handleAddToCart = () => {
     const price = Number(indicator?.replace(/[^0-9]/g, "")) || 0;
-    const id = Date.now().toString(); // Generate unique ID for cart item
+    const existing = cart.find((item: CartItem) => item.name === title);
 
     addToCart({
-      id,
       name: title,
       price,
       qty: 1,
     });
 
-    Alert.alert("Added to Cart", `${title} has been added!`);
+    const message = existing ? "Quantity updated!" : "Added to Cart";
+    Alert.alert(
+      message,
+      `${title} has been ${existing ? "updated" : "added"}!`
+    );
   };
 
   return (
@@ -57,10 +62,12 @@ const Card = ({
 
       {image && (
         <TouchableOpacity
-          onPress={() => link && navigation.navigate(link as never)}
+          onPress={
+            onPress || (() => link && navigation.navigate(link as never))
+          }
         >
           <Image
-            source={{ uri: image }}
+            source={typeof image === "string" ? { uri: image } : image}
             style={styles.image}
             resizeMode="cover"
           />
@@ -69,7 +76,9 @@ const Card = ({
 
       <View style={styles.content}>
         <TouchableOpacity
-          onPress={() => link && navigation.navigate(link as never)}
+          onPress={
+            onPress || (() => link && navigation.navigate(link as never))
+          }
         >
           <Text style={styles.title}>{title}</Text>
         </TouchableOpacity>
@@ -78,9 +87,14 @@ const Card = ({
 
         <Text style={styles.body}>{body}</Text>
 
-        <TouchableOpacity onPress={handleAddToCart}>
-          <Button text="Add to Cart" filled type="primary" />
-        </TouchableOpacity>
+        {showAddToCart && (
+          <Button
+            text="Add to Cart"
+            filled
+            type="primary"
+            onPress={handleAddToCart}
+          />
+        )}
       </View>
     </View>
   );

@@ -1,6 +1,5 @@
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import React, { createContext, useContext, useState } from "react";
 
-// Define the CartItem type
 export interface CartItem {
   id: string;
   name: string;
@@ -8,56 +7,71 @@ export interface CartItem {
   qty: number;
 }
 
-// Define the context type
 interface CartContextType {
   cart: CartItem[];
-  total: number;
-  addToCart: (item: CartItem) => void;
+  addToCart: (item: Omit<CartItem, "id">) => void;
   removeFromCart: (id: string) => void;
   increaseQty: (id: string) => void;
   decreaseQty: (id: string) => void;
+  total: number;
 }
 
-// Create context
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
-// Provider component
-export const CartProvider: React.FC<{ children: ReactNode }> = ({
+export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [cart, setCart] = useState<CartItem[]>([]);
 
-  const addToCart = (item: CartItem) => {
-    setCart((prev) => [...prev, item]);
+  const addToCart = (item: Omit<CartItem, "id">) => {
+    setCart((prev) => {
+      const existing = prev.find((p) => p.name === item.name);
+      if (existing) {
+        return prev.map((p) =>
+          p.name === item.name ? { ...p, qty: p.qty + item.qty } : p
+        );
+      }
+      return [
+        ...prev,
+        {
+          ...item,
+          id: Math.random().toString(36).substr(2, 9) + Date.now().toString(36),
+        },
+      ];
+    });
   };
 
   const removeFromCart = (id: string) => {
-    setCart((prev) => prev.filter((i) => i.id !== id));
+    setCart((prev) => prev.filter((item) => item.id !== id));
   };
 
   const increaseQty = (id: string) => {
     setCart((prev) =>
-      prev.map((i) => (i.id === id ? { ...i, qty: i.qty + 1 } : i))
+      prev.map((item) =>
+        item.id === id ? { ...item, qty: item.qty + 1 } : item
+      )
     );
   };
 
   const decreaseQty = (id: string) => {
     setCart((prev) =>
-      prev.map((i) => (i.id === id ? { ...i, qty: Math.max(1, i.qty - 1) } : i))
+      prev.map((item) =>
+        item.id === id && item.qty > 1 ? { ...item, qty: item.qty - 1 } : item
+      )
     );
   };
 
-  const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+  const total = cart.reduce((acc, item) => acc + item.price * item.qty, 0);
 
   return (
     <CartContext.Provider
       value={{
         cart,
-        total,
         addToCart,
         removeFromCart,
         increaseQty,
         decreaseQty,
+        total,
       }}
     >
       {children}

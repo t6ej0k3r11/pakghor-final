@@ -5,13 +5,16 @@ import {
   StyleSheet,
   Image,
   FlatList,
-  TouchableOpacity,
   ScrollView,
+  Dimensions,
 } from "react-native";
-import { MaterialIcons } from "@expo/vector-icons";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
+import NavBar from "../components/NavBar";
+import Footer from "../components/Footer";
+import Card from "../components/Card";
 
-const burgerImage = require("../assets/burger.jpg"); // Correct way for RN local images
+const burgerImage = require("../../assets/burger.jpg");
 
 interface CardType {
   _id: string;
@@ -29,7 +32,85 @@ interface CardType {
 const HomeScreen: React.FC = () => {
   const [cards, setCards] = useState<CardType[]>([]);
   const navigation = useNavigation<any>();
-  const apiUrl = "https://pakghor-final-658f.vercel.app/api";
+  const apiUrl = process.env.EXPO_PUBLIC_API_URL;
+  const { width } = Dimensions.get("window");
+  const isLargeScreen = width > 400;
+
+  const styles = StyleSheet.create({
+    container: { padding: isLargeScreen ? 25 : 20, backgroundColor: "#fdfdfd" },
+    heroSection: {
+      alignItems: "center",
+      marginBottom: isLargeScreen ? 30 : 20,
+    },
+    heroTitle: {
+      fontSize: isLargeScreen ? 32 : 28,
+      fontWeight: "800",
+      textAlign: "center",
+      color: "#333",
+    },
+    heroTitleGradient: { color: "#ff7e5f" },
+    heroSubtitle: {
+      marginTop: 10,
+      fontSize: isLargeScreen ? 18 : 16,
+      color: "#555",
+      textAlign: "center",
+    },
+    cardsGrid: { paddingBottom: 20 },
+    card: {
+      backgroundColor: "#fff",
+      borderRadius: 20,
+      marginBottom: 20,
+      overflow: "hidden",
+      shadowColor: "#000",
+      shadowOpacity: 0.08,
+      shadowOffset: { width: 0, height: 6 },
+      shadowRadius: 15,
+      elevation: 5,
+    },
+    badge: {
+      position: "absolute",
+      top: 15,
+      left: 15,
+      backgroundColor: "#ff7e5f",
+      paddingHorizontal: 12,
+      paddingVertical: 6,
+      borderRadius: 50,
+      zIndex: 1,
+    },
+    badgeText: {
+      color: "#fff",
+      fontWeight: "600",
+      fontSize: isLargeScreen ? 14 : 12,
+    },
+    cardImage: {
+      width: "100%",
+      height: isLargeScreen ? 200 : 180,
+      resizeMode: "cover",
+    },
+    cardBody: { padding: isLargeScreen ? 20 : 15, gap: 5 },
+    cardTitle: {
+      fontSize: isLargeScreen ? 20 : 18,
+      fontWeight: "700",
+      color: "#ff7e5f",
+    },
+    cardSubtitle: { fontSize: isLargeScreen ? 16 : 14, color: "#555" },
+    cardText: { fontSize: isLargeScreen ? 16 : 14, color: "#555" },
+    cardIndicator: { fontWeight: "600", color: "#ff7e5f", marginVertical: 5 },
+    cardButton: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "center",
+      backgroundColor: "#ff7e5f",
+      paddingVertical: 12,
+      borderRadius: 12,
+      marginTop: 10,
+    },
+    cardButtonText: {
+      color: "#fff",
+      fontWeight: "700",
+      fontSize: isLargeScreen ? 18 : 16,
+    },
+  });
 
   useEffect(() => {
     fetch(`${apiUrl}/cards`)
@@ -39,39 +120,16 @@ const HomeScreen: React.FC = () => {
   }, []);
 
   const renderCard = ({ item }: { item: CardType }) => (
-    <View style={styles.card}>
-      {item.badge?.filled && (
-        <View style={styles.badge}>
-          <Text style={styles.badgeText}>{item.badge.text}</Text>
-        </View>
-      )}
-      <Image
-        source={item._id === "burger" ? burgerImage : { uri: item.image }}
-        style={styles.cardImage}
-      />
-      <View style={styles.cardBody}>
-        <Text style={styles.cardTitle}>{item.title}</Text>
-        {item.subtitle && (
-          <Text style={styles.cardSubtitle}>{item.subtitle}</Text>
-        )}
-        <Text style={styles.cardText}>{item.body}</Text>
-        {item.indicator && (
-          <Text style={styles.cardIndicator}>{item.indicator}</Text>
-        )}
-        <TouchableOpacity
-          style={styles.cardButton}
-          onPress={() => navigation.navigate("Product", { id: item._id })}
-        >
-          <MaterialIcons
-            name="send"
-            size={20}
-            color="#fff"
-            style={{ marginRight: 5 }}
-          />
-          <Text style={styles.cardButtonText}>Order Now</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+    <Card
+      title={item.title}
+      body={item.body}
+      badge={item.badge}
+      image={item._id === "burger" ? burgerImage : item.image}
+      indicator={item.indicator}
+      subtitle={item.subtitle}
+      onPress={() => navigation.navigate("ProductDetails", { id: item._id })}
+      showAddToCart={true}
+    />
   );
 
   // Merge burger card with fetched cards
@@ -89,85 +147,33 @@ const HomeScreen: React.FC = () => {
   ];
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      {/* Hero Section */}
-      <View style={styles.heroSection}>
-        <Text style={styles.heroTitle}>
-          Welcome to <Text style={styles.heroTitleGradient}>PakGhor</Text>
-        </Text>
-        <Text style={styles.heroSubtitle}>
-          Fresh, delicious and crafted with love. Explore our latest specials
-          and signature dishes.
-        </Text>
-      </View>
-
-      {/* Cards Section */}
+    <SafeAreaView style={{ flex: 1 }}>
+      <NavBar
+        brandName="PakGhor"
+        navItems={["Home", "About", "Services", "Contact"]}
+      />
       <FlatList
         data={allCards}
         renderItem={renderCard}
         keyExtractor={(item) => item._id}
-        contentContainerStyle={styles.cardsGrid}
+        ListHeaderComponent={() => (
+          <View style={styles.heroSection}>
+            <Text style={styles.heroTitle}>
+              Welcome to <Text style={styles.heroTitleGradient}>PakGhor</Text>
+            </Text>
+            <Text style={styles.heroSubtitle}>
+              Fresh, delicious and crafted with love. Explore our latest
+              specials and signature dishes.
+            </Text>
+          </View>
+        )}
+        contentContainerStyle={styles.container}
         showsVerticalScrollIndicator={false}
+        ListFooterComponent={<View style={{ height: 20 }} />}
       />
-    </ScrollView>
+      <Footer />
+    </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: { padding: 20, backgroundColor: "#fdfdfd" },
-  heroSection: { alignItems: "center", marginBottom: 20 },
-  heroTitle: {
-    fontSize: 28,
-    fontWeight: "800",
-    textAlign: "center",
-    color: "#333",
-  },
-  heroTitleGradient: { color: "#ff7e5f" },
-  heroSubtitle: {
-    marginTop: 8,
-    fontSize: 16,
-    color: "#555",
-    textAlign: "center",
-  },
-  cardsGrid: { paddingBottom: 20 },
-  card: {
-    backgroundColor: "#fff",
-    borderRadius: 20,
-    marginBottom: 20,
-    overflow: "hidden",
-    shadowColor: "#000",
-    shadowOpacity: 0.08,
-    shadowOffset: { width: 0, height: 6 },
-    shadowRadius: 15,
-    elevation: 5,
-  },
-  badge: {
-    position: "absolute",
-    top: 15,
-    left: 15,
-    backgroundColor: "#ff7e5f",
-    paddingHorizontal: 10,
-    paddingVertical: 4,
-    borderRadius: 50,
-    zIndex: 1,
-  },
-  badgeText: { color: "#fff", fontWeight: "600", fontSize: 12 },
-  cardImage: { width: "100%", height: 180, resizeMode: "cover" },
-  cardBody: { padding: 15, gap: 5 },
-  cardTitle: { fontSize: 18, fontWeight: "700", color: "#ff7e5f" },
-  cardSubtitle: { fontSize: 14, color: "#555" },
-  cardText: { fontSize: 14, color: "#555" },
-  cardIndicator: { fontWeight: "600", color: "#ff7e5f", marginVertical: 5 },
-  cardButton: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#ff7e5f",
-    paddingVertical: 10,
-    borderRadius: 12,
-    marginTop: 10,
-  },
-  cardButtonText: { color: "#fff", fontWeight: "700", fontSize: 16 },
-});
 
 export default HomeScreen;
