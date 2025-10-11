@@ -8,60 +8,6 @@ import {
 } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
-import MaskedView from "@react-native-masked-view/masked-view";
-
-const styles = StyleSheet.create({
-  footer: {
-    backgroundColor: "#1a1a1d",
-    paddingVertical: 25,
-    paddingHorizontal: 15,
-    marginTop: 20,
-    alignItems: "center",
-  },
-  footerTop: {
-    alignItems: "center",
-  },
-  brand: {
-    fontSize: 24,
-    fontWeight: "700",
-    marginBottom: 8,
-    textAlign: "center",
-  },
-  tagline: {
-    fontSize: 14,
-    opacity: 0.85,
-    marginBottom: 12,
-    color: "#eaeaea",
-    textAlign: "center",
-  },
-  socialIcons: {
-    flexDirection: "row",
-  },
-  divider: {
-    height: 1,
-    backgroundColor: "rgba(255,255,255,0.1)",
-    width: "100%",
-    marginVertical: 15,
-  },
-  footerBottom: {
-    alignItems: "center",
-  },
-  bottomText: {
-    fontSize: 12,
-    opacity: 0.8,
-    color: "#eaeaea",
-  },
-  heart: {
-    color: "#ff7e5f",
-    fontSize: 14,
-  },
-  websiteLink: {
-    fontSize: 12,
-    opacity: 0.8,
-    color: "#f7e169",
-    textDecorationLine: "underline",
-  },
-});
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -73,73 +19,116 @@ const Footer = () => {
   };
 
   return (
-    <View style={styles.footer}>
-      {/* Footer Top */}
-      <View style={styles.footerTop}>
-        {/* Gradient Brand Text */}
-        <MaskedView
-          maskElement={
-            <Text style={[styles.brand, { backgroundColor: "transparent" }]}>
-              PakGhor
-            </Text>
-          }
-        >
-          <LinearGradient
-            colors={["#f7e169", "#ff7e5f"]}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 0 }}
-          >
-            <Text style={[styles.brand, { opacity: 0 }]}>PakGhor</Text>
-          </LinearGradient>
-        </MaskedView>
-
+    <LinearGradient
+      colors={["#ff7e5f", "#f7e169"]}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 1, y: 1 }}
+      style={styles.footer}
+    >
+      <View style={styles.footerContent}>
+        {/* Brand */}
+        <Text style={styles.brand}>PakGhor</Text>
         <Text style={styles.tagline}>
-          Fresh • Delicious • Crafted with ❤️ for every bite.
+          Fresh • Delicious • Made with ❤️ in Mymensingh
         </Text>
 
+        {/* Social Icons */}
         <View style={styles.socialIcons}>
           <TouchableOpacity
-            style={{ marginRight: 15 }}
-            accessibilityLabel="Follow us on Facebook"
             onPress={() =>
               openURL("https://www.facebook.com/PakGhorMymensingh")
             }
+            style={styles.iconButton}
           >
-            <FontAwesome name="facebook" size={22} color="#eaeaea" />
+            <FontAwesome name="facebook" size={26} color="#fff" />
           </TouchableOpacity>
+
           <TouchableOpacity
-            style={{ marginRight: 15 }}
-            accessibilityLabel="Follow us on Instagram"
             onPress={() => openURL("https://www.instagram.com")}
+            style={styles.iconButton}
           >
-            <FontAwesome name="instagram" size={22} color="#eaeaea" />
+            <FontAwesome name="instagram" size={26} color="#fff" />
           </TouchableOpacity>
+
           <TouchableOpacity
-            accessibilityLabel="Follow us on X"
             onPress={() => openURL("https://x.com")}
+            style={styles.iconButton}
           >
-            <FontAwesome name="twitter" size={22} color="#eaeaea" />
+            <FontAwesome name="twitter" size={26} color="#fff" />
           </TouchableOpacity>
         </View>
-      </View>
 
-      {/* Divider */}
-      <View style={styles.divider} />
+        {/* Divider */}
+        <View style={styles.divider} />
 
-      {/* Footer Bottom */}
-      <View style={styles.footerBottom}>
+        {/* Bottom Text */}
         <Text style={styles.bottomText}>
           © {currentYear} t63j0ker. All rights reserved.
         </Text>
-        <Text style={styles.bottomText}>
-          Made with <Text style={styles.heart}>❤</Text> in Mymensingh
-        </Text>
         <TouchableOpacity onPress={() => openURL("https://pakghor.com")}>
-          <Text style={styles.websiteLink}>Visit Our Website</Text>
+          <Text style={styles.websiteLink}>pakghor.com</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </LinearGradient>
   );
 };
+
+const styles = StyleSheet.create({
+  footer: {
+    borderRadius: 16,
+    marginVertical: 20,
+    marginHorizontal: 10,
+    elevation: 6,
+    shadowColor: "#000",
+    shadowOpacity: 0.2,
+    shadowOffset: { width: 0, height: 4 },
+    shadowRadius: 6,
+  },
+  footerContent: {
+    paddingVertical: 20,
+    paddingHorizontal: 15,
+    alignItems: "center",
+  },
+  brand: {
+    fontSize: 22,
+    fontWeight: "800",
+    color: "#fff",
+    textTransform: "uppercase",
+  },
+  tagline: {
+    fontSize: 13,
+    color: "rgba(255,255,255,0.9)",
+    marginTop: 6,
+    textAlign: "center",
+    marginBottom: 10,
+  },
+  socialIcons: {
+    flexDirection: "row",
+    marginBottom: 10,
+  },
+  iconButton: {
+    marginHorizontal: 10,
+    backgroundColor: "rgba(255,255,255,0.15)",
+    padding: 10,
+    borderRadius: 50,
+  },
+  divider: {
+    height: 1,
+    backgroundColor: "rgba(255,255,255,0.3)",
+    width: "80%",
+    marginVertical: 10,
+  },
+  bottomText: {
+    fontSize: 12,
+    color: "rgba(255,255,255,0.9)",
+    marginBottom: 5,
+  },
+  websiteLink: {
+    fontSize: 13,
+    fontWeight: "600",
+    color: "#fff",
+    textDecorationLine: "underline",
+  },
+});
 
 export default Footer;

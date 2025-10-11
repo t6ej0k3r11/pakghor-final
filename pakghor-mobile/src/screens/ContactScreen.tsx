@@ -16,102 +16,14 @@ import {
   MapPinIcon,
   PaperAirplaneIcon,
 } from "react-native-heroicons/solid";
+import { LinearGradient } from "expo-linear-gradient";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 
+const { width } = Dimensions.get("window");
+const isLargeScreen = width > 400;
+
 const Contact: React.FC = () => {
-  const { width } = Dimensions.get("window");
-  const isLargeScreen = width > 400;
-
-  const styles = StyleSheet.create({
-    container: {
-      padding: isLargeScreen ? 25 : 20,
-      backgroundColor: "#f8f9fa",
-      paddingHorizontal: width * 0.05,
-    },
-    hero: { marginBottom: isLargeScreen ? 25 : 20, alignItems: "center" },
-    heroTitle: {
-      fontSize: isLargeScreen ? 32 : 28,
-      fontWeight: "700",
-      color: "#333",
-    },
-    heroSubtitle: {
-      fontSize: isLargeScreen ? 18 : 16,
-      color: "#666",
-      textAlign: "center",
-      marginTop: 10,
-    },
-    cardGrid: {
-      flexDirection: "row",
-      justifyContent: "space-between",
-      marginBottom: 25,
-    },
-    card: {
-      flex: 1,
-      backgroundColor: "#f97316",
-      borderRadius: 16,
-      padding: isLargeScreen ? 20 : 16,
-      marginHorizontal: 5,
-      alignItems: "center",
-    },
-    iconWrapper: { marginBottom: 10 },
-    cardTitle: {
-      fontWeight: "700",
-      color: "#fff",
-      fontSize: isLargeScreen ? 18 : 16,
-      marginBottom: 6,
-    },
-    cardBody: {
-      color: "#fff",
-      fontSize: isLargeScreen ? 16 : 14,
-      textAlign: "center",
-    },
-    formWrapper: {
-      backgroundColor: "#fff",
-      borderRadius: 16,
-      padding: isLargeScreen ? 20 : 16,
-      shadowColor: "#000",
-      shadowOpacity: 0.1,
-      shadowRadius: 10,
-      elevation: 5,
-    },
-    formTitle: {
-      fontSize: isLargeScreen ? 24 : 20,
-      fontWeight: "700",
-      marginBottom: 6,
-      textAlign: "center",
-    },
-    formSubtitle: {
-      fontSize: isLargeScreen ? 16 : 14,
-      color: "#666",
-      marginBottom: 15,
-      textAlign: "center",
-    },
-    input: {
-      borderWidth: 1,
-      borderColor: "#d1d5db",
-      borderRadius: 12,
-      padding: 14,
-      marginBottom: 15,
-      backgroundColor: "#f9fafb",
-      fontSize: isLargeScreen ? 16 : 14,
-    },
-    submitBtn: {
-      flexDirection: "row",
-      justifyContent: "center",
-      alignItems: "center",
-      backgroundColor: "#f97316",
-      padding: 14,
-      borderRadius: 12,
-    },
-    submitText: {
-      color: "#fff",
-      fontWeight: "700",
-      marginLeft: 8,
-      fontSize: isLargeScreen ? 16 : 14,
-    },
-  });
-
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -127,7 +39,6 @@ const Contact: React.FC = () => {
       Alert.alert("Error", "Please fill in all fields!");
       return;
     }
-    console.log("Message sent:", formData);
     Alert.alert("✅ Message sent successfully!");
     setFormData({ name: "", email: "", message: "" });
   };
@@ -150,38 +61,131 @@ const Contact: React.FC = () => {
     },
   ];
 
+  const styles = StyleSheet.create({
+    container: {
+      padding: isLargeScreen ? 25 : 20,
+      backgroundColor: "#fff9f7",
+      paddingHorizontal: width * 0.05,
+    },
+    hero: { marginBottom: isLargeScreen ? 25 : 20, alignItems: "center" },
+    heroTitle: {
+      fontSize: isLargeScreen ? 32 : 28,
+      fontWeight: "800",
+      color: "#333",
+    },
+    heroSubtitle: {
+      fontSize: isLargeScreen ? 18 : 16,
+      color: "#555",
+      textAlign: "center",
+      marginTop: 8,
+      maxWidth: 350,
+      lineHeight: isLargeScreen ? 24 : 22,
+    },
+    card: {
+      flexDirection: "row",
+      alignItems: "center",
+      backgroundColor: "#ff7e5f",
+      borderRadius: 16,
+      padding: 20,
+      marginBottom: 15,
+      shadowColor: "#000",
+      shadowOpacity: 0.1,
+      shadowRadius: 8,
+      elevation: 4,
+    },
+    iconWrapper: {
+      width: 50,
+      height: 50,
+      borderRadius: 25,
+      backgroundColor: "#f7e169",
+      justifyContent: "center",
+      alignItems: "center",
+      marginRight: 15,
+    },
+    cardText: { color: "#fff", fontWeight: "600", fontSize: 16 },
+    cardSubText: { color: "#fff", fontSize: 14, marginTop: 4 },
+    formWrapper: {
+      backgroundColor: "#fff",
+      borderRadius: 16,
+      padding: isLargeScreen ? 25 : 20,
+      shadowColor: "#000",
+      shadowOpacity: 0.05,
+      shadowRadius: 10,
+      elevation: 5,
+      marginTop: 10,
+    },
+    formTitle: {
+      fontSize: isLargeScreen ? 24 : 20,
+      fontWeight: "700",
+      marginBottom: 8,
+      textAlign: "center",
+    },
+    formSubtitle: {
+      fontSize: isLargeScreen ? 16 : 14,
+      color: "#555",
+      marginBottom: 20,
+      textAlign: "center",
+      lineHeight: isLargeScreen ? 22 : 20,
+    },
+    input: {
+      borderWidth: 1,
+      borderColor: "#ddd",
+      borderRadius: 12,
+      padding: 14,
+      marginBottom: 15,
+      backgroundColor: "#fff9f7",
+      fontSize: isLargeScreen ? 16 : 14,
+    },
+    submitBtn: {
+      borderRadius: 12,
+      overflow: "hidden",
+      marginTop: 5,
+    },
+    submitBtnContent: {
+      flexDirection: "row",
+      justifyContent: "center",
+      alignItems: "center",
+      paddingVertical: 14,
+    },
+    submitText: {
+      color: "#fff",
+      fontWeight: "700",
+      marginLeft: 8,
+      fontSize: isLargeScreen ? 16 : 14,
+    },
+  });
+
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#fff9f7" }}>
       <NavBar
         brandName="PakGhor"
-        navItems={["Home", "About", "Services", "Contact"]}
+        navItems={["Home", "About", "Menu", "Contact"]}
       />
       <ScrollView contentContainerStyle={styles.container}>
-        {/* Hero */}
         <View style={styles.hero}>
-          <Text style={styles.heroTitle}>Reach Us</Text>
+          <Text style={styles.heroTitle}>Contact Us</Text>
           <Text style={styles.heroSubtitle}>
-            We’d love to hear from you! Reach out with any questions, feedback,
-            or just to say hello.
+            We’d love to hear from you! Any questions, feedback, or orders, just
+            reach out.
           </Text>
         </View>
 
         {/* Contact Cards */}
-        <View style={styles.cardGrid}>
-          {contactInfo.map((info, idx) => (
-            <View key={idx} style={styles.card}>
-              <View style={styles.iconWrapper}>{info.icon}</View>
-              <Text style={styles.cardTitle}>{info.title}</Text>
-              <Text style={styles.cardBody}>{info.body}</Text>
+        {contactInfo.map((info, idx) => (
+          <View key={idx} style={styles.card}>
+            <View style={styles.iconWrapper}>{info.icon}</View>
+            <View>
+              <Text style={styles.cardText}>{info.title}</Text>
+              <Text style={styles.cardSubText}>{info.body}</Text>
             </View>
-          ))}
-        </View>
+          </View>
+        ))}
 
         {/* Contact Form */}
         <View style={styles.formWrapper}>
           <Text style={styles.formTitle}>Send Us a Message</Text>
           <Text style={styles.formSubtitle}>
-            Fill out the form below and we’ll get back to you as soon as
+            Fill out the form below and we'll get back to you as soon as
             possible.
           </Text>
 
@@ -206,9 +210,20 @@ const Contact: React.FC = () => {
             multiline
           />
 
-          <TouchableOpacity style={styles.submitBtn} onPress={handleSubmit}>
-            <PaperAirplaneIcon size={20} color="#fff" />
-            <Text style={styles.submitText}>Send Message</Text>
+          <TouchableOpacity
+            style={styles.submitBtn}
+            onPress={handleSubmit}
+            activeOpacity={0.8}
+          >
+            <LinearGradient
+              colors={["#ff7e5f", "#f7e169"]}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={styles.submitBtnContent}
+            >
+              <PaperAirplaneIcon size={20} color="#fff" />
+              <Text style={styles.submitText}>Send Message</Text>
+            </LinearGradient>
           </TouchableOpacity>
         </View>
       </ScrollView>

@@ -20,93 +20,15 @@ const Signup = () => {
   const { width } = Dimensions.get("window");
   const isLargeScreen = width > 400;
 
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: "#fdfdfd",
-      alignItems: "center",
-      justifyContent: "center",
-      paddingHorizontal: width * 0.05,
-    },
-    box: {
-      backgroundColor: "#fff",
-      padding: isLargeScreen ? 30 : 25,
-      borderRadius: 15,
-      width: "90%",
-      maxWidth: 400,
-      alignSelf: "center",
-      alignItems: "center",
-      shadowColor: "#000",
-      shadowOpacity: 0.15,
-      shadowRadius: 10,
-      elevation: 8,
-    },
-    logo: {
-      width: isLargeScreen ? 100 : 90,
-      height: isLargeScreen ? 100 : 90,
-      borderRadius: isLargeScreen ? 50 : 45,
-      marginBottom: 20,
-    },
-    title: {
-      fontSize: isLargeScreen ? 26 : 22,
-      fontWeight: "600",
-      color: "#333",
-      marginBottom: 20,
-    },
-    input: {
-      width: "100%",
-      backgroundColor: "#fff",
-      borderWidth: 1,
-      borderColor: "#ddd",
-      borderRadius: 12,
-      paddingVertical: 14,
-      paddingHorizontal: 18,
-      fontSize: isLargeScreen ? 18 : 16,
-      marginBottom: 15,
-    },
-    signupBtn: {
-      width: "100%",
-      paddingVertical: 16,
-      borderRadius: 12,
-      alignItems: "center",
-      justifyContent: "center",
-      marginTop: 8,
-    },
-    signupText: {
-      color: "#fff",
-      fontSize: isLargeScreen ? 18 : 16,
-      fontWeight: "600",
-    },
-    loginBtn: {
-      width: "100%",
-      paddingVertical: 16,
-      borderRadius: 12,
-      backgroundColor: "#333",
-      alignItems: "center",
-      justifyContent: "center",
-      marginTop: 15,
-    },
-    loginText: {
-      color: "#fff",
-      fontSize: isLargeScreen ? 16 : 14,
-      fontWeight: "500",
-    },
-    msg: {
-      marginTop: 20,
-      fontSize: isLargeScreen ? 16 : 15,
-      fontWeight: "500",
-      color: "#28a745",
-    },
-  });
-
   const [username, setUser] = useState("");
   const [email, setEmail] = useState("");
   const [mobile, setMobile] = useState("");
   const [password, setPass] = useState("");
   const [msg, setMsg] = useState("");
-  const navigation = useNavigation();
+  const [loading, setLoading] = useState(false);
 
-  const apiUrl = process.env.EXPO_PUBLIC_API_URL; // equivalent to import.meta.env
+  const navigation = useNavigation();
+  const apiUrl = process.env.EXPO_PUBLIC_API_URL;
 
   const handleSignup = async () => {
     if (!username || !email || !mobile || !password) {
@@ -115,6 +37,7 @@ const Signup = () => {
     }
 
     try {
+      setLoading(true);
       await axios.post(`${apiUrl}/register`, {
         username,
         email,
@@ -133,17 +56,19 @@ const Signup = () => {
       }, 1500);
     } catch (error) {
       setMsg("❌ Signup failed. Try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#fff9f7" }}>
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : undefined}
         style={styles.container}
       >
         <ScrollView
-          contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
+          contentContainerStyle={styles.scrollContainer}
           showsVerticalScrollIndicator={false}
         >
           <View style={styles.box}>
@@ -153,11 +78,12 @@ const Signup = () => {
               resizeMode="cover"
             />
 
-            <Text style={styles.title}>Create Account</Text>
+            <Text style={styles.title}>Create Your PakGhor Account</Text>
 
             <TextInput
               style={styles.input}
               placeholder="Full Name"
+              placeholderTextColor="#888"
               value={username}
               onChangeText={setUser}
             />
@@ -166,6 +92,7 @@ const Signup = () => {
               style={styles.input}
               placeholder="Email Address"
               keyboardType="email-address"
+              placeholderTextColor="#888"
               value={email}
               onChangeText={setEmail}
             />
@@ -174,6 +101,7 @@ const Signup = () => {
               style={styles.input}
               placeholder="Mobile Number"
               keyboardType="phone-pad"
+              placeholderTextColor="#888"
               value={mobile}
               onChangeText={setMobile}
             />
@@ -182,11 +110,12 @@ const Signup = () => {
               style={styles.input}
               placeholder="Password"
               secureTextEntry
+              placeholderTextColor="#888"
               value={password}
               onChangeText={setPass}
             />
 
-            {/* Gradient Button */}
+            {/* Gradient Signup Button */}
             <TouchableOpacity onPress={handleSignup} activeOpacity={0.9}>
               <LinearGradient
                 colors={["#f7e169", "#ff7e5f"]}
@@ -194,7 +123,9 @@ const Signup = () => {
                 end={{ x: 1, y: 1 }}
                 style={styles.signupBtn}
               >
-                <Text style={styles.signupText}>Sign Up</Text>
+                <Text style={styles.signupText}>
+                  {loading ? "Creating Account..." : "Sign Up"}
+                </Text>
               </LinearGradient>
             </TouchableOpacity>
 
@@ -203,7 +134,9 @@ const Signup = () => {
               style={styles.loginBtn}
               onPress={() => navigation.navigate("Login" as never)}
             >
-              <Text style={styles.loginText}>Log In</Text>
+              <Text style={styles.loginText}>
+                Already have an account? Log In
+              </Text>
             </TouchableOpacity>
 
             {msg ? <Text style={styles.msg}>{msg}</Text> : null}
@@ -213,5 +146,91 @@ const Signup = () => {
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  scrollContainer: {
+    flexGrow: 1,
+    justifyContent: "center",
+    paddingHorizontal: 20,
+    paddingVertical: 30,
+  },
+  box: {
+    backgroundColor: "#fff",
+    borderRadius: 20,
+    padding: 25,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.08,
+    shadowRadius: 20,
+    elevation: 6,
+    alignItems: "center",
+  },
+  logo: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    marginBottom: 20,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "700",
+    color: "#333",
+    marginBottom: 20,
+    textAlign: "center",
+  },
+  input: {
+    width: "100%",
+    borderWidth: 1,
+    borderColor: "#ffcc99",
+    borderRadius: 12,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    fontSize: 16,
+    color: "#333",
+    backgroundColor: "#fff9f7",
+    marginBottom: 15,
+  },
+  signupBtn: {
+    width: "100%",
+    paddingVertical: 14,
+    borderRadius: 12,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 10,
+  },
+  signupText: {
+    color: "#fff",
+    fontSize: 18,
+    fontWeight: "700",
+    textTransform: "uppercase",
+    letterSpacing: 0.5,
+  },
+  loginBtn: {
+    width: "100%",
+    paddingVertical: 14,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: "#ff7e5f",
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 15,
+  },
+  loginText: {
+    color: "#ff7e5f",
+    fontSize: 16,
+    fontWeight: "600",
+  },
+  msg: {
+    marginTop: 20,
+    fontSize: 15,
+    fontWeight: "500",
+    color: "#28a745",
+    textAlign: "center",
+  },
+});
 
 export default Signup;

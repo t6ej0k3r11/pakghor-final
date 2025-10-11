@@ -13,6 +13,7 @@ import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 
 const { width } = Dimensions.get("window");
+const isLargeScreen = width > 400;
 
 interface Service {
   title: string;
@@ -23,8 +24,7 @@ interface Service {
 const services: Service[] = [
   {
     title: "Home Delivery",
-    description:
-      "Get your favorite meals delivered to your doorstep quickly and safely.",
+    description: "Get your favorite meals delivered quickly and safely.",
     icon: "🚚",
   },
   {
@@ -35,20 +35,17 @@ const services: Service[] = [
   {
     title: "Catering",
     description:
-      "Professional catering services for birthdays, weddings and corporate events.",
+      "Professional catering for birthdays, weddings & corporate events.",
     icon: "🎉",
   },
   {
     title: "Custom Orders",
-    description:
-      "We create special dishes as per your taste, preference and occasions.",
+    description: "Special dishes as per your taste, preference and occasions.",
     icon: "🍔",
   },
 ];
 
 const Services = () => {
-  const isLargeScreen = width > 400;
-
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -58,78 +55,77 @@ const Services = () => {
     },
     heroSection: {
       alignItems: "center",
-      marginBottom: isLargeScreen ? 40 : 30,
+      marginBottom: isLargeScreen ? 35 : 25,
+      paddingVertical: 20,
+      paddingHorizontal: 15,
+      borderRadius: 20,
+      backgroundColor: "#fff3eb",
+      shadowColor: "#000",
+      shadowOpacity: 0.05,
+      shadowRadius: 10,
+      elevation: 3,
     },
     title: {
-      fontSize: isLargeScreen ? 32 : 28,
+      fontSize: isLargeScreen ? 28 : 24,
       fontWeight: "800",
       color: "#333",
       textAlign: "center",
     },
-    highlight: {
-      backgroundColor: "transparent",
-      color: "#ff7e5f",
-    },
+    highlight: { color: "#ff7e5f" },
     subtitle: {
-      marginTop: 12,
-      fontSize: isLargeScreen ? 18 : 16,
-      color: "#666",
-      lineHeight: isLargeScreen ? 24 : 22,
+      marginTop: 10,
+      fontSize: isLargeScreen ? 16 : 14,
+      color: "#555",
       textAlign: "center",
-      maxWidth: 650,
+      lineHeight: isLargeScreen ? 22 : 20,
     },
-    grid: {
-      flexDirection: "row",
-      flexWrap: "wrap",
-      justifyContent: "center",
-      gap: 16,
-    },
+    grid: { flexDirection: "row", flexWrap: "wrap", justifyContent: "center" },
     cardWrapper: {
-      width: isLargeScreen ? width / 4 - 40 : width / 2 - 30,
-      margin: 8,
+      width: isLargeScreen ? width / 2.2 : width - 40, // responsive: 1 col mobile, 2 col tablet
+      margin: 10,
     },
     card: {
       borderRadius: 20,
-      padding: isLargeScreen ? 22 : 18,
+      padding: 20,
       alignItems: "center",
+      backgroundColor: "#fff",
       shadowColor: "#000",
-      shadowOpacity: 0.15,
+      shadowOpacity: 0.08,
       shadowOffset: { width: 0, height: 6 },
-      shadowRadius: 8,
-      elevation: 6,
+      shadowRadius: 10,
+      elevation: 5,
     },
     iconWrapper: {
-      width: isLargeScreen ? 80 : 70,
-      height: isLargeScreen ? 80 : 70,
-      borderRadius: isLargeScreen ? 40 : 35,
+      width: 70,
+      height: 70,
+      borderRadius: 50,
       justifyContent: "center",
       alignItems: "center",
       marginBottom: 15,
+      backgroundColor: "#ff7e5f",
       shadowColor: "#ff7e5f",
       shadowOpacity: 0.4,
       shadowOffset: { width: 0, height: 4 },
-      shadowRadius: 8,
+      shadowRadius: 6,
     },
-    icon: {
-      fontSize: isLargeScreen ? 34 : 30,
-    },
+    icon: { fontSize: 30 },
     cardTitle: {
-      fontSize: isLargeScreen ? 18 : 16,
+      fontSize: 16,
       fontWeight: "700",
       color: "#333",
-      marginBottom: 8,
+      marginBottom: 6,
       textAlign: "center",
     },
     cardDesc: {
-      fontSize: isLargeScreen ? 15 : 13,
+      fontSize: 14,
       color: "#555",
       textAlign: "center",
-      lineHeight: isLargeScreen ? 20 : 18,
+      lineHeight: 20,
     },
   });
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#fff9f7" }}>
       <NavBar
         brandName="PakGhor"
         navItems={["Home", "About", "Services", "Contact"]}
@@ -139,7 +135,7 @@ const Services = () => {
         contentContainerStyle={{ paddingBottom: 40 }}
         showsVerticalScrollIndicator={false}
       >
-        {/* Hero Section */}
+        {/* Hero */}
         <View style={styles.heroSection}>
           <Text style={styles.title}>
             Discover <Text style={styles.highlight}>Our Services</Text>
@@ -150,7 +146,7 @@ const Services = () => {
           </Text>
         </View>
 
-        {/* Grid Section */}
+        {/* Services Grid */}
         <View style={styles.grid}>
           {services.map((service, index) => (
             <TouchableOpacity
@@ -170,7 +166,6 @@ const Services = () => {
                 >
                   <Text style={styles.icon}>{service.icon}</Text>
                 </LinearGradient>
-
                 <Text style={styles.cardTitle}>{service.title}</Text>
                 <Text style={styles.cardDesc}>{service.description}</Text>
               </LinearGradient>

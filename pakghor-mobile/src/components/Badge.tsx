@@ -1,13 +1,13 @@
 import React from "react";
 import { Text, View, StyleSheet } from "react-native";
-import type { BadgeInterface } from "../types";
 import { LinearGradient } from "expo-linear-gradient";
+import type { BadgeInterface } from "../types";
 
 const Badge = ({ text, filled }: BadgeInterface) => {
   if (filled) {
     return (
       <LinearGradient
-        colors={["#f7e169", "#ff7e5f"]}
+        colors={["#ff7e5f", "#f7e169"]}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 0 }}
         style={styles.filledBadge}
@@ -26,30 +26,38 @@ const Badge = ({ text, filled }: BadgeInterface) => {
 
 const styles = StyleSheet.create({
   filledBadge: {
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 20,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 50,
     marginBottom: 8,
+    shadowColor: "#ff7e5f",
+    shadowOpacity: 0.25,
+    shadowRadius: 6,
+    shadowOffset: { width: 0, height: 3 },
+    elevation: 3,
   },
   filledText: {
-    color: "white",
+    color: "#fff",
     fontWeight: "700",
     fontSize: 12,
-    textTransform: "uppercase",
+    letterSpacing: 0.5,
+    textAlign: "center",
   },
   outlinedBadge: {
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 20,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 50,
+    borderWidth: 1.6,
+    borderColor: "#ff7e5f",
     marginBottom: 8,
-    borderWidth: 1,
-    borderColor: "#f7e169",
+    backgroundColor: "rgba(255,255,255,0.05)",
   },
   outlinedText: {
-    color: "#f7e169",
+    color: "#ff7e5f",
     fontWeight: "700",
     fontSize: 12,
-    textTransform: "uppercase",
+    letterSpacing: 0.5,
+    textAlign: "center",
   },
 });
 

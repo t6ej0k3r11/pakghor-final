@@ -14,7 +14,7 @@ interface ButtonProps {
 
 const Button = ({
   text,
-  filled,
+  filled = false,
   type = "primary",
   to,
   icon,
@@ -27,9 +27,9 @@ const Button = ({
     else if (to) navigation.navigate(to);
   };
 
-  // Base content inside the button
   const content = (
     <View style={styles.innerContainer}>
+      {icon && <View style={styles.icon}>{icon}</View>}
       <Text
         style={[
           styles.text,
@@ -38,16 +38,14 @@ const Button = ({
       >
         {text}
       </Text>
-      {icon && <View style={styles.icon}>{icon}</View>}
     </View>
   );
 
-  // Filled button → gradient background
   if (filled) {
     return (
-      <TouchableOpacity activeOpacity={0.8} onPress={handlePress}>
+      <TouchableOpacity activeOpacity={0.85} onPress={handlePress}>
         <LinearGradient
-          colors={["#f7e169", "#ff7e5f"]}
+          colors={["#ff7e5f", "#f7e169"]}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
           style={[styles.button, styles.filled]}
@@ -58,10 +56,9 @@ const Button = ({
     );
   }
 
-  // Outline / transparent button
   return (
     <TouchableOpacity
-      activeOpacity={0.8}
+      activeOpacity={0.85}
       onPress={handlePress}
       style={[
         styles.button,
@@ -78,34 +75,34 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    gap: 8,
-    paddingVertical: 10,
-    paddingHorizontal: 18,
-    borderRadius: 14,
-    overflow: "hidden",
+    paddingVertical: 12,
+    paddingHorizontal: 22,
+    borderRadius: 16,
     marginVertical: 6,
+    overflow: "hidden",
   },
   filled: {
     shadowColor: "#ff7e5f",
-    shadowOpacity: 0.4,
-    shadowRadius: 10,
-    elevation: 6,
+    shadowOpacity: 0.3,
+    shadowRadius: 12,
+    shadowOffset: { width: 0, height: 6 },
+    elevation: 5,
   },
   primary: {
     borderWidth: 2,
     borderColor: "#ff7e5f",
-    backgroundColor: "#111",
+    backgroundColor: "#fff8f1",
   },
   secondary: {
-    borderWidth: 2,
-    borderColor: "#444",
-    backgroundColor: "rgba(20,20,20,0.7)",
+    borderWidth: 1.5,
+    borderColor: "#ccc",
+    backgroundColor: "rgba(255,255,255,0.1)",
   },
   text: {
-    fontSize: 15,
-    fontWeight: "600",
+    fontSize: 16,
+    fontWeight: "700",
     textTransform: "uppercase",
-    fontFamily: "Poppins_600SemiBold",
+    letterSpacing: 0.5,
   },
   textFilled: {
     color: "#fff",
@@ -114,15 +111,16 @@ const styles = StyleSheet.create({
     color: "#ff7e5f",
   },
   text_secondary: {
-    color: "#eee",
+    color: "#444",
   },
   innerContainer: {
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "center",
     gap: 8,
   },
   icon: {
-    marginLeft: 4,
+    marginRight: 6,
   },
 });
 

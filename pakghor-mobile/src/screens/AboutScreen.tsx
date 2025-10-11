@@ -1,5 +1,12 @@
 import React from "react";
-import { View, Text, ScrollView, StyleSheet, Dimensions } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  StyleSheet,
+  Dimensions,
+  StatusBar,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { LinearGradient } from "expo-linear-gradient";
 import NavBar from "../components/NavBar";
@@ -15,80 +22,6 @@ const About: React.FC = () => {
   const { width } = Dimensions.get("window");
   const isLargeScreen = width > 400;
 
-  const styles = StyleSheet.create({
-    container: {
-      paddingVertical: isLargeScreen ? 40 : 30,
-      paddingHorizontal: width * 0.05,
-      backgroundColor: "#fff9f7",
-    },
-    hero: {
-      marginBottom: isLargeScreen ? 40 : 30,
-      alignItems: "center",
-    },
-    title: {
-      fontSize: isLargeScreen ? 32 : 28,
-      fontWeight: "800",
-      color: "#333",
-      textAlign: "center",
-    },
-    titleGradient: {
-      backgroundColor: "transparent",
-      color: "#ff7e5f", // fallback solid color
-    },
-    subtitle: {
-      marginTop: 12,
-      fontSize: isLargeScreen ? 18 : 16,
-      color: "#666",
-      textAlign: "center",
-      maxWidth: 650,
-      lineHeight: isLargeScreen ? 24 : 22,
-    },
-    cardsContainer: {
-      flexDirection: "row",
-      flexWrap: "wrap",
-      justifyContent: "space-between",
-      gap: 15,
-    },
-    card: {
-      width: isLargeScreen ? "30%" : "48%",
-      backgroundColor: "#fff",
-      borderRadius: 22,
-      padding: isLargeScreen ? 25 : 20,
-      marginBottom: 15,
-      shadowColor: "#000",
-      shadowOffset: { width: 0, height: 6 },
-      shadowOpacity: 0.08,
-      shadowRadius: 10,
-      elevation: 5,
-      alignItems: "center",
-    },
-    iconWrapper: {
-      width: isLargeScreen ? 80 : 70,
-      height: isLargeScreen ? 80 : 70,
-      borderRadius: isLargeScreen ? 40 : 35,
-      alignItems: "center",
-      justifyContent: "center",
-      marginBottom: 15,
-    },
-    icon: {
-      fontSize: isLargeScreen ? 32 : 28,
-      color: "#fff",
-    },
-    cardTitle: {
-      fontSize: isLargeScreen ? 20 : 18,
-      fontWeight: "700",
-      color: "#333",
-      marginBottom: 10,
-      textAlign: "center",
-    },
-    cardDescription: {
-      fontSize: isLargeScreen ? 16 : 14,
-      color: "#555",
-      textAlign: "center",
-      lineHeight: isLargeScreen ? 22 : 20,
-    },
-  });
-
   const aboutCards: AboutCard[] = [
     {
       title: "Our Mission",
@@ -99,56 +32,162 @@ const About: React.FC = () => {
     {
       title: "Our Vision",
       description:
-        "To become the most loved local food brand that combines taste, quality, and happiness in every bite.",
+        "To become the most loved local food brand that blends taste, quality, and happiness in every bite.",
       icon: "🌟",
     },
     {
       title: "Our Values",
       description:
-        "Quality, Passion, Customer Satisfaction, and Continuous Improvement in everything we do.",
+        "Quality • Passion • Customer Satisfaction • Continuous Improvement in everything we do.",
       icon: "💛",
     },
   ];
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={styles.safeArea}>
+      <StatusBar barStyle="dark-content" backgroundColor="#fff" />
       <NavBar
         brandName="PakGhor"
         navItems={["Home", "About", "Services", "Contact"]}
       />
-      <ScrollView contentContainerStyle={styles.container}>
+
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
         {/* Hero Section */}
-        <View style={styles.hero}>
-          <Text style={styles.title}>
-            About <Text style={styles.titleGradient}>Pakghor</Text>
-          </Text>
-          <Text style={styles.subtitle}>
-            We are dedicated to providing delicious food and great service. Our
-            passion is to make every meal a memorable experience.
-          </Text>
+        <View style={styles.heroSection}>
+          <LinearGradient
+            colors={["#ffecd2", "#fcb69f"]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+            style={styles.heroBackground}
+          >
+            <Text style={styles.heroTitle}>
+              About <Text style={styles.heroTitleHighlight}>PakGhor</Text>
+            </Text>
+            <Text style={styles.heroSubtitle}>
+              Crafted with ❤️ — bringing Mymensingh’s favorite street flavors to
+              every plate with warmth, care, and creativity.
+            </Text>
+          </LinearGradient>
         </View>
 
-        {/* Cards Section */}
-        <View style={styles.cardsContainer}>
+        {/* Info Cards */}
+        <View style={styles.cardsWrapper}>
           {aboutCards.map((card, index) => (
-            <View key={index} style={styles.card}>
+            <LinearGradient
+              key={index}
+              colors={["#fff", "#fff9f7"]}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 1 }}
+              style={[
+                styles.card,
+                { shadowColor: index % 2 === 0 ? "#ff7e5f" : "#f7e169" },
+              ]}
+            >
               <LinearGradient
-                colors={["#f7e169", "#ff7e5f"]}
+                colors={["#ff7e5f", "#f7e169"]}
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 1 }}
                 style={styles.iconWrapper}
               >
                 <Text style={styles.icon}>{card.icon}</Text>
               </LinearGradient>
+
               <Text style={styles.cardTitle}>{card.title}</Text>
               <Text style={styles.cardDescription}>{card.description}</Text>
-            </View>
+            </LinearGradient>
           ))}
         </View>
       </ScrollView>
+
       <Footer />
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: "#fff9f7",
+  },
+  scrollContainer: {
+    paddingVertical: 30,
+    paddingHorizontal: 18,
+  },
+  heroSection: {
+    borderRadius: 24,
+    overflow: "hidden",
+    marginBottom: 25,
+    shadowColor: "#ff7e5f",
+    shadowOpacity: 0.2,
+    shadowRadius: 10,
+    elevation: 6,
+  },
+  heroBackground: {
+    paddingVertical: 40,
+    paddingHorizontal: 20,
+    borderRadius: 24,
+    alignItems: "center",
+  },
+  heroTitle: {
+    fontSize: 30,
+    fontWeight: "800",
+    color: "#333",
+    textAlign: "center",
+  },
+  heroTitleHighlight: {
+    color: "#ff7e5f",
+  },
+  heroSubtitle: {
+    marginTop: 12,
+    fontSize: 16,
+    color: "#444",
+    textAlign: "center",
+    maxWidth: 600,
+    lineHeight: 22,
+  },
+  cardsWrapper: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+    gap: 15,
+  },
+  card: {
+    width: "48%",
+    borderRadius: 20,
+    padding: 20,
+    marginBottom: 15,
+    backgroundColor: "#fff",
+    elevation: 5,
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 6 },
+    alignItems: "center",
+  },
+  iconWrapper: {
+    width: 70,
+    height: 70,
+    borderRadius: 35,
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 12,
+  },
+  icon: {
+    fontSize: 30,
+    color: "#fff",
+  },
+  cardTitle: {
+    fontSize: 18,
+    fontWeight: "700",
+    color: "#ff7e5f",
+    marginBottom: 8,
+    textAlign: "center",
+  },
+  cardDescription: {
+    fontSize: 14,
+    color: "#555",
+    textAlign: "center",
+    lineHeight: 20,
+  },
+});
 
 export default About;

@@ -5,12 +5,14 @@ import {
   TouchableOpacity,
   Image,
   TextInput,
-  ScrollView,
   StyleSheet,
+  Animated,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useCart } from "../context/CartContext";
 import { useAuth } from "../context/AuthContext";
+import { Ionicons } from "@expo/vector-icons";
+
 const logo = require("../assets/logo.jpg");
 
 interface NavBarProps {
@@ -45,8 +47,9 @@ const NavBar = ({ brandName, navItems }: NavBarProps) => {
 
   return (
     <View style={styles.navbar}>
+      {/* Top Bar */}
       <View style={styles.container}>
-        {/* Logo */}
+        {/* Logo & Brand */}
         <TouchableOpacity
           style={styles.brand}
           onPress={() => navigation.navigate("LandingPage")}
@@ -55,31 +58,40 @@ const NavBar = ({ brandName, navItems }: NavBarProps) => {
           <Text style={styles.brandText}>{brandName}</Text>
         </TouchableOpacity>
 
-        {/* Hamburger */}
-        <TouchableOpacity onPress={toggleMenu} style={styles.hamburger}>
-          <View style={styles.bar} />
-          <View style={styles.bar} />
-          <View style={styles.bar} />
-        </TouchableOpacity>
+        {/* Icons */}
+        <View style={styles.iconRow}>
+          {/* Cart */}
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate(isLoggedIn ? "Checkout" : "Login")
+            }
+            style={styles.cartIconContainer}
+          >
+            <Ionicons name="cart" size={22} color="#ff7e5f" />
+            {cartCount > 0 && (
+              <View style={styles.cartBadge}>
+                <Text style={styles.cartBadgeText}>{cartCount}</Text>
+              </View>
+            )}
+          </TouchableOpacity>
+
+          {/* Hamburger */}
+          <TouchableOpacity onPress={toggleMenu} style={styles.hamburger}>
+            <View style={styles.bar} />
+            <View style={styles.bar} />
+            <View style={styles.bar} />
+          </TouchableOpacity>
+        </View>
       </View>
 
-      {/* Menu Items */}
+      {/* Floating Menu */}
       {isOpen && (
-        <View style={styles.menu}>
-          {navItems.map((item) => (
-            <TouchableOpacity
-              key={item}
-              onPress={() => handleNavigate(item)}
-              style={styles.menuItem}
-            >
-              <Text style={styles.menuItemText}>{item}</Text>
-            </TouchableOpacity>
-          ))}
-
+        <Animated.View style={styles.menu}>
           {/* Search */}
           <View style={styles.searchContainer}>
             <TextInput
-              placeholder="Search..."
+              placeholder="Search your favorite item..."
+              placeholderTextColor="#aaa"
               value={searchText}
               onChangeText={setSearchText}
               style={styles.searchInput}
@@ -92,20 +104,16 @@ const NavBar = ({ brandName, navItems }: NavBarProps) => {
             </TouchableOpacity>
           </View>
 
-          {/* Cart */}
-          <TouchableOpacity
-            onPress={() =>
-              navigation.navigate(isLoggedIn ? "Checkout" : "Login")
-            }
-            style={styles.cartButton}
-          >
-            <Text style={{ fontSize: 20, marginRight: 5 }}>🛒</Text>
-            {cartCount > 0 && (
-              <View style={styles.cartBadge}>
-                <Text style={styles.cartBadgeText}>{cartCount}</Text>
-              </View>
-            )}
-          </TouchableOpacity>
+          {/* Menu Items */}
+          {navItems.map((item) => (
+            <TouchableOpacity
+              key={item}
+              onPress={() => handleNavigate(item)}
+              style={styles.menuItem}
+            >
+              <Text style={styles.menuItemText}>{item}</Text>
+            </TouchableOpacity>
+          ))}
 
           {/* Auth Buttons */}
           <View style={styles.authButtons}>
@@ -113,27 +121,29 @@ const NavBar = ({ brandName, navItems }: NavBarProps) => {
               <>
                 <TouchableOpacity
                   onPress={() => navigation.navigate("Login")}
-                  style={styles.authButton}
+                  style={[styles.authButton, { backgroundColor: "#ff7e5f" }]}
                 >
                   <Text style={styles.authButtonText}>Login</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => navigation.navigate("Signup")}
-                  style={styles.authButton}
+                  style={[styles.authButton, { backgroundColor: "#f7e169" }]}
                 >
-                  <Text style={styles.authButtonText}>Signup</Text>
+                  <Text style={[styles.authButtonText, { color: "#333" }]}>
+                    Signup
+                  </Text>
                 </TouchableOpacity>
               </>
             ) : (
               <TouchableOpacity
                 onPress={handleLogout}
-                style={styles.authButton}
+                style={[styles.authButton, { backgroundColor: "#ff7e5f" }]}
               >
                 <Text style={styles.authButtonText}>Logout</Text>
               </TouchableOpacity>
             )}
           </View>
-        </View>
+        </Animated.View>
       )}
     </View>
   );
@@ -141,14 +151,15 @@ const NavBar = ({ brandName, navItems }: NavBarProps) => {
 
 const styles = StyleSheet.create({
   navbar: {
-    backgroundColor: "#f7e169",
+    backgroundColor: "#fff",
     paddingVertical: 10,
     paddingHorizontal: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: "#eee",
     shadowColor: "#000",
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
-    elevation: 5,
+    shadowOpacity: 0.08,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 3,
   },
   container: {
     flexDirection: "row",
@@ -160,79 +171,45 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   logo: {
-    width: 50,
-    height: 50,
+    width: 45,
+    height: 45,
     borderRadius: 12,
     marginRight: 8,
   },
   brandText: {
     fontSize: 20,
     fontWeight: "bold",
-    textTransform: "uppercase",
-    color: "#fff",
+    color: "#ff7e5f",
+  },
+  iconRow: {
+    flexDirection: "row",
+    alignItems: "center",
   },
   hamburger: {
     padding: 5,
+    marginLeft: 10,
   },
   bar: {
-    width: 25,
+    width: 26,
     height: 3,
-    backgroundColor: "#fff",
+    backgroundColor: "#ff7e5f",
     marginVertical: 2,
     borderRadius: 2,
   },
-  menu: {
-    marginTop: 10,
+  icon: {
+    fontSize: 22,
   },
-  menuItem: {
-    backgroundColor: "#fff",
-    paddingVertical: 10,
-    paddingHorizontal: 15,
-    borderRadius: 10,
-    marginBottom: 5,
-  },
-  menuItemText: {
-    color: "#f7e169",
-    fontWeight: "600",
-  },
-  searchContainer: {
-    flexDirection: "row",
-    marginVertical: 10,
-  },
-  searchInput: {
-    flex: 1,
-    backgroundColor: "#fff",
-    borderRadius: 8,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    marginRight: 5,
-  },
-  searchButton: {
-    backgroundColor: "#ff7e5f",
-    borderRadius: 8,
-    paddingHorizontal: 15,
-    justifyContent: "center",
-  },
-  searchButtonText: {
-    color: "#fff",
-    fontWeight: "bold",
-  },
-  cartButton: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "#fff",
-    padding: 10,
-    borderRadius: 10,
-    marginBottom: 5,
+  cartIconContainer: {
+    position: "relative",
   },
   cartBadge: {
     position: "absolute",
-    top: -5,
-    right: -5,
+    top: -4,
+    right: -10,
     backgroundColor: "crimson",
-    width: 18,
-    height: 18,
-    borderRadius: 9,
+    width: 16,
+    height: 16,
+    borderRadius: 8,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -241,20 +218,71 @@ const styles = StyleSheet.create({
     fontSize: 10,
     fontWeight: "bold",
   },
+  menu: {
+    backgroundColor: "rgba(255,255,255,0.98)",
+    borderRadius: 16,
+    marginTop: 10,
+    paddingVertical: 15,
+    paddingHorizontal: 15,
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 5 },
+    elevation: 5,
+  },
+  searchContainer: {
+    flexDirection: "row",
+    marginBottom: 15,
+  },
+  searchInput: {
+    flex: 1,
+    backgroundColor: "#f1f1f1",
+    borderRadius: 10,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    fontSize: 14,
+    color: "#333",
+  },
+  searchButton: {
+    backgroundColor: "#ff7e5f",
+    borderRadius: 10,
+    paddingHorizontal: 15,
+    marginLeft: 8,
+    justifyContent: "center",
+  },
+  searchButtonText: {
+    color: "#fff",
+    fontWeight: "bold",
+  },
+  menuItem: {
+    backgroundColor: "#fff",
+    paddingVertical: 12,
+    borderRadius: 10,
+    marginBottom: 8,
+    borderWidth: 1,
+    borderColor: "#f0f0f0",
+  },
+  menuItemText: {
+    textAlign: "center",
+    color: "#333",
+    fontWeight: "600",
+    fontSize: 15,
+  },
   authButtons: {
     flexDirection: "row",
-    marginTop: 5,
+    justifyContent: "space-evenly",
+    marginTop: 10,
   },
   authButton: {
-    backgroundColor: "#fff",
-    paddingVertical: 8,
-    paddingHorizontal: 15,
+    flex: 1,
+    paddingVertical: 10,
     borderRadius: 10,
-    marginRight: 5,
+    alignItems: "center",
+    marginHorizontal: 5,
   },
   authButtonText: {
-    color: "#f7e169",
-    fontWeight: "600",
+    color: "#fff",
+    fontWeight: "700",
+    fontSize: 14,
   },
 });
 

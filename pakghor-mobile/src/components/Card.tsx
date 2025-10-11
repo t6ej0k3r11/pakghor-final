@@ -46,110 +46,148 @@ const Card = ({
   };
 
   return (
-    <View style={styles.card}>
-      {indicator && (
-        <LinearGradient
-          colors={["#f7e169", "#ff7e5f"]}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 0 }}
-          style={styles.indicator}
-        >
-          <Text style={styles.indicatorText}>{indicator}</Text>
-        </LinearGradient>
-      )}
-
-      {badge && <Badge text={badge.text} filled={badge.filled} />}
-
-      {image && (
-        <TouchableOpacity
-          onPress={
-            onPress || (() => link && navigation.navigate(link as never))
-          }
-        >
-          <Image
-            source={typeof image === "string" ? { uri: image } : image}
-            style={styles.image}
-            resizeMode="cover"
-          />
-        </TouchableOpacity>
-      )}
-
-      <View style={styles.content}>
-        <TouchableOpacity
-          onPress={
-            onPress || (() => link && navigation.navigate(link as never))
-          }
-        >
-          <Text style={styles.title}>{title}</Text>
-        </TouchableOpacity>
-
-        {subtitle && <Text style={styles.subtitle}>{subtitle}</Text>}
-
-        <Text style={styles.body}>{body}</Text>
-
-        {showAddToCart && (
-          <Button
-            text="Add to Cart"
-            filled
-            type="primary"
-            onPress={handleAddToCart}
-          />
+    <LinearGradient colors={["#fff9f1", "#fff"]} style={styles.cardWrapper}>
+      <View style={styles.card}>
+        {image && (
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={
+              onPress || (() => link && navigation.navigate(link as never))
+            }
+          >
+            <View style={styles.imageContainer}>
+              <Image
+                source={typeof image === "string" ? { uri: image } : image}
+                style={styles.image}
+                resizeMode="cover"
+              />
+              {indicator && (
+                <LinearGradient
+                  colors={["#f7e169", "#ff7e5f"]}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 0 }}
+                  style={styles.priceTag}
+                >
+                  <Text style={styles.priceText}>{indicator}</Text>
+                </LinearGradient>
+              )}
+            </View>
+          </TouchableOpacity>
         )}
+
+        <View style={styles.content}>
+          {badge && <Badge text={badge.text} filled={badge.filled} />}
+
+          <TouchableOpacity
+            onPress={
+              onPress || (() => link && navigation.navigate(link as never))
+            }
+          >
+            <Text style={styles.title}>{title}</Text>
+          </TouchableOpacity>
+
+          {subtitle && <Text style={styles.subtitle}>{subtitle}</Text>}
+
+          <Text style={styles.body} numberOfLines={2}>
+            {body}
+          </Text>
+
+          {showAddToCart && (
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={handleAddToCart}
+              style={styles.cartButton}
+            >
+              <LinearGradient
+                colors={["#ff7e5f", "#f7e169"]}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+                style={styles.cartButtonGradient}
+              >
+                <Text style={styles.cartButtonText}>Add to Cart</Text>
+              </LinearGradient>
+            </TouchableOpacity>
+          )}
+        </View>
       </View>
-    </View>
+    </LinearGradient>
   );
 };
 
 const styles = StyleSheet.create({
+  cardWrapper: {
+    borderRadius: 22,
+    marginBottom: 18,
+    shadowColor: "#000",
+    shadowOpacity: 0.08,
+    shadowOffset: { width: 0, height: 4 },
+    shadowRadius: 8,
+    elevation: 4,
+  },
   card: {
     backgroundColor: "#fff",
-    borderRadius: 18,
+    borderRadius: 22,
     overflow: "hidden",
-    marginBottom: 16,
-    elevation: 5, // shadow for Android
-    shadowColor: "#000", // shadow for iOS
-    shadowOpacity: 0.1,
-    shadowRadius: 10,
-    shadowOffset: { width: 0, height: 6 },
   },
-  indicator: {
-    position: "absolute",
-    top: 12,
-    right: 12,
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 12,
-    zIndex: 1,
-  },
-  indicatorText: {
-    color: "#fff",
-    fontSize: 12,
-    fontWeight: "600",
-    textTransform: "uppercase",
+  imageContainer: {
+    position: "relative",
   },
   image: {
     width: "100%",
-    height: 180,
+    height: 220,
+    borderTopLeftRadius: 22,
+    borderTopRightRadius: 22,
+  },
+  priceTag: {
+    position: "absolute",
+    bottom: 12,
+    right: 12,
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    borderRadius: 14,
+    shadowColor: "#000",
+    shadowOpacity: 0.15,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 4,
+  },
+  priceText: {
+    color: "#fff",
+    fontSize: 14,
+    fontWeight: "700",
   },
   content: {
     paddingHorizontal: 16,
-    paddingVertical: 12,
+    paddingVertical: 14,
   },
   title: {
     fontSize: 20,
     fontWeight: "700",
-    marginBottom: 4,
-    color: "#ff7e5f", // gradient not supported on Text; for actual gradient, wrap in LinearGradient
+    color: "#ff7e5f",
   },
   subtitle: {
-    fontSize: 14,
+    fontSize: 15,
     color: "#666",
     marginBottom: 4,
   },
   body: {
-    fontSize: 16,
+    fontSize: 15,
     color: "#444",
-    marginBottom: 12,
+    marginBottom: 10,
+  },
+  cartButton: {
+    borderRadius: 14,
+    overflow: "hidden",
+    alignSelf: "flex-start",
+  },
+  cartButtonGradient: {
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 14,
+  },
+  cartButtonText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "700",
   },
 });
 

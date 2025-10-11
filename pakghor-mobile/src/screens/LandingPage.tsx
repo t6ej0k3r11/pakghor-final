@@ -7,149 +7,130 @@ import {
   TouchableOpacity,
   ScrollView,
   Dimensions,
+  Animated,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
-const heroImg = require("../../assets/pakghor.jpg");
 
+const heroImg = require("../../assets/pakghor.jpg");
 const { width } = Dimensions.get("window");
+const isLargeScreen = width > 400;
 
 const LandingPage = () => {
-  const isLargeScreen = width > 400;
-
-  const styles = StyleSheet.create({
-    container: {
-      flexGrow: 1,
-      backgroundColor: "#fff",
-      alignItems: "center",
-    },
-    hero: {
-      width: "100%",
-      height: isLargeScreen ? 500 : 450,
-      position: "relative",
-      justifyContent: "flex-end",
-      alignItems: "center",
-    },
-    heroImage: {
-      width: "100%",
-      height: "100%",
-      resizeMode: "cover",
-      position: "absolute",
-    },
-    overlay: {
-      width: "100%",
-      alignItems: "center",
-      padding: isLargeScreen ? 25 : 20,
-    },
-    heroTitle: {
-      fontSize: isLargeScreen ? 32 : 28,
-      fontWeight: "800",
-      color: "#fff",
-      textAlign: "center",
-    },
-    brand: {
-      color: "#ff7e5f",
-    },
-    heroSubtitle: {
-      color: "#f0f0f0",
-      fontSize: isLargeScreen ? 18 : 16,
-      marginTop: 12,
-      textAlign: "center",
-      maxWidth: 350,
-    },
-    buttons: {
-      flexDirection: "row",
-      marginTop: 25,
-      gap: 15,
-    },
-    button: {
-      paddingVertical: 12,
-      paddingHorizontal: isLargeScreen ? 25 : 20,
-      borderRadius: 20,
-    },
-    primary: {
-      backgroundColor: "#ff7e5f",
-    },
-    secondary: {
-      backgroundColor: "#f7e169",
-    },
-    buttonText: {
-      color: "#fff",
-      fontWeight: "700",
-      fontSize: isLargeScreen ? 18 : 16,
-    },
-    particle: {
-      width: 6,
-      height: 6,
-      backgroundColor: "rgba(255,255,255,0.4)",
-      borderRadius: 50,
-      position: "absolute",
-    },
-    footer: {
-      marginTop: 20,
-      paddingVertical: 10,
-    },
-    footerText: {
-      textAlign: "center",
-      color: "#777",
-      fontSize: 12,
-    },
-  });
-
-  const [particles, setParticles] = useState<number[]>([]);
   const navigation = useNavigation<any>();
+  const [particles, setParticles] = useState<number[]>([]);
+
+  // Animation states
+  const heroOpacity = new Animated.Value(0);
+  const heroTranslate = new Animated.Value(20);
 
   useEffect(() => {
-    setParticles(Array.from({ length: 30 }, (_, i) => i));
+    setParticles(Array.from({ length: 20 }, (_, i) => i));
+
+    // Animate hero text on mount
+    Animated.parallel([
+      Animated.timing(heroOpacity, {
+        toValue: 1,
+        duration: 800,
+        useNativeDriver: true,
+      }),
+      Animated.timing(heroTranslate, {
+        toValue: 0,
+        duration: 800,
+        useNativeDriver: true,
+      }),
+    ]).start();
   }, []);
 
+  // Particle animation (floating up)
+  const animatedParticles = particles.map((p, index) => {
+    const translateY = new Animated.Value(Math.random() * 50);
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(translateY, {
+          toValue: -50,
+          duration: 4000 + Math.random() * 2000,
+          useNativeDriver: true,
+        }),
+        Animated.timing(translateY, {
+          toValue: 0,
+          duration: 4000 + Math.random() * 2000,
+          useNativeDriver: true,
+        }),
+      ])
+    ).start();
+    return { key: index, translateY };
+  });
+
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
       <NavBar
         brandName="PakGhor"
         navItems={["Home", "About", "Services", "Contact"]}
       />
       <ScrollView contentContainerStyle={styles.container}>
-        {/* Hero Section */}
         <View style={styles.hero}>
-          {/* Particles (simple dots for background animation) */}
-          {particles.map((p) => (
-            <View key={p} style={[styles.particle, randomParticlePosition()]} />
-          ))}
-
-          {/* Hero Image */}
           <Image source={heroImg} style={styles.heroImage} />
 
-          {/* Overlay Content */}
+          {animatedParticles.map(({ key, translateY }) => (
+            <Animated.View
+              key={key}
+              style={[
+                styles.particle,
+                randomParticlePosition(),
+                { transform: [{ translateY }] },
+              ]}
+            />
+          ))}
+
           <LinearGradient
-            colors={["rgba(0,0,0,0.5)", "transparent"]}
+            colors={["rgba(0,0,0,0.5)", "rgba(0,0,0,0.1)"]}
+            start={{ x: 0, y: 1 }}
+            end={{ x: 0, y: 0 }}
             style={styles.overlay}
           >
-            <Text style={styles.heroTitle}>
-              Welcome to <Text style={styles.brand}>Pakghor</Text>
-            </Text>
-
-            <Text style={styles.heroSubtitle}>
-              Fresh, street-style fast food made with love in Mymensingh.
-            </Text>
+            <Animated.Text
+              style={[
+                styles.heroTitle,
+                {
+                  opacity: heroOpacity,
+                  transform: [{ translateY: heroTranslate }],
+                },
+              ]}
+            >
+              Welcome to <Text style={styles.brand}>PakGhor</Text>
+            </Animated.Text>
+            <Animated.Text
+              style={[
+                styles.heroSubtitle,
+                {
+                  opacity: heroOpacity,
+                  transform: [{ translateY: heroTranslate }],
+                },
+              ]}
+            >
+              Fresh, street-style fast food made with love in Mymensingh
+            </Animated.Text>
 
             <View style={styles.buttons}>
-              <TouchableOpacity
-                style={[styles.button, styles.primary]}
+              <AnimatedTouchableGradient
+                style={styles.button}
+                colors={["#ff7e5f", "#f7e169"]}
                 onPress={() => navigation.navigate("Home")}
               >
                 <Text style={styles.buttonText}>See Menu</Text>
-              </TouchableOpacity>
+              </AnimatedTouchableGradient>
 
-              <TouchableOpacity
-                style={[styles.button, styles.secondary]}
+              <AnimatedTouchableGradient
+                style={styles.button}
+                colors={["#f7e169", "#ff7e5f"]}
                 onPress={() => navigation.navigate("Checkout")}
               >
                 <Text style={styles.buttonText}>Order Now</Text>
-              </TouchableOpacity>
+              </AnimatedTouchableGradient>
             </View>
           </LinearGradient>
         </View>
@@ -159,10 +140,120 @@ const LandingPage = () => {
   );
 };
 
-// Helper: random particle positioning for visual effect
+// Custom Animated Gradient Button
+const AnimatedTouchableGradient = ({
+  colors,
+  style,
+  onPress,
+  children,
+}: any) => {
+  const gradientAnim = new Animated.Value(0);
+  useEffect(() => {
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(gradientAnim, {
+          toValue: 1,
+          duration: 2500,
+          useNativeDriver: false,
+        }),
+        Animated.timing(gradientAnim, {
+          toValue: 0,
+          duration: 2500,
+          useNativeDriver: false,
+        }),
+      ])
+    ).start();
+  }, []);
+
+  const startColor = gradientAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: [colors[0], colors[1]],
+  });
+  const endColor = gradientAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: [colors[1], colors[0]],
+  });
+
+  return (
+    <TouchableOpacity activeOpacity={0.8} onPress={onPress}>
+      <Animated.View style={[style, { borderRadius: 30 }]}>
+        <LinearGradient
+          colors={[colors[0], colors[1]]}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 0 }}
+          style={{
+            paddingVertical: 14,
+            paddingHorizontal: 28,
+            borderRadius: 30,
+            alignItems: "center",
+          }}
+        >
+          {children}
+        </LinearGradient>
+      </Animated.View>
+    </TouchableOpacity>
+  );
+};
+
+// Particle helper
 const randomParticlePosition = () => ({
   top: Math.random() * 400,
   left: Math.random() * (width - 20),
+});
+
+const styles = StyleSheet.create({
+  container: { flexGrow: 1, alignItems: "center" },
+  hero: {
+    width: "100%",
+    height: isLargeScreen ? 500 : 450,
+    position: "relative",
+    justifyContent: "flex-end",
+  },
+  heroImage: {
+    width: "100%",
+    height: "100%",
+    resizeMode: "cover",
+    position: "absolute",
+  },
+  overlay: {
+    width: "100%",
+    alignItems: "center",
+    padding: isLargeScreen ? 25 : 20,
+  },
+  heroTitle: {
+    fontSize: isLargeScreen ? 32 : 28,
+    fontWeight: "800",
+    color: "#fff",
+    textAlign: "center",
+    marginBottom: 12,
+    textShadowColor: "rgba(0,0,0,0.5)",
+    textShadowOffset: { width: 0, height: 2 },
+    textShadowRadius: 6,
+  },
+  brand: { color: "#ff7e5f" },
+  heroSubtitle: {
+    color: "#fffefc",
+    fontSize: isLargeScreen ? 18 : 16,
+    textAlign: "center",
+    marginBottom: 25,
+    maxWidth: 350,
+    lineHeight: isLargeScreen ? 26 : 22,
+  },
+  buttons: { flexDirection: "row", gap: 15 },
+  button: {},
+  buttonText: {
+    fontSize: isLargeScreen ? 18 : 16,
+    fontWeight: "700",
+    color: "#fff",
+    textAlign: "center",
+  },
+  particle: {
+    width: 6,
+    height: 6,
+    borderRadius: 50,
+    backgroundColor: "rgba(255,255,255,0.3)",
+    position: "absolute",
+  },
 });
 
 export default LandingPage;
