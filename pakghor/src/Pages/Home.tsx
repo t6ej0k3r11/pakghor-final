@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import "./Home.css"; // new CSS file
 
 function Home() {
-  const [cards, setCards] = useState<any[]>([]);
+  const [cards, setCards] = useState<unknown[]>([]);
   const apiUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
@@ -18,7 +18,7 @@ function Home() {
     fetch(`${apiUrl}/cards`)
       .then((res) => res.json())
       .then((data) => setCards(data));
-  }, []);
+  }, [apiUrl]);
 
   return (
     <div className="home-wrapper">
@@ -55,7 +55,8 @@ function Home() {
           }}
         />
 
-        {cards.map((card, index) => (
+        {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+        {cards.map((card: any, index) => (
           <Card
             key={index}
             body={card.body}

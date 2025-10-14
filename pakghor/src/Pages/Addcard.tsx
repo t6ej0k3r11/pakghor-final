@@ -36,7 +36,7 @@ const AddCard: React.FC = () => {
       });
       alert("✅ Card added successfully!");
       setForm({ title: "", subtitle: "", body: "", image: "", indicator: "" });
-    } catch (err) {
+    } catch {
       alert("❌ Error adding card");
     }
   };

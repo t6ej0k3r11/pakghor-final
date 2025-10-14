@@ -77,7 +77,7 @@ const LoginScreen: React.FC = () => {
           <View style={styles.card}>
             <TouchableOpacity
               activeOpacity={0.7}
-              onPress={() => navigation.navigate("Home")}
+              onPress={() => navigation.navigate("LandingPage")}
             >
               <Image source={logo} style={styles.logo} />
             </TouchableOpacity>

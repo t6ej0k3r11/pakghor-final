@@ -97,9 +97,8 @@ const About: React.FC = () => {
             </LinearGradient>
           ))}
         </View>
+        <Footer />
       </ScrollView>
-
-      <Footer />
     </SafeAreaView>
   );
 };

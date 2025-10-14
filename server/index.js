@@ -24,30 +24,6 @@ mongoose
   .then(() => console.log("✅ MongoDB connected successfully"))
   .catch((err) => console.error("❌ MongoDB connection error:", err.message));
 
-app.post("/register", async (req, res) => {
-  try {
-    const { username, password } = req.body;
-
-    if (!username || !password) {
-      return res
-        .status(400)
-        .json({ error: "Username and password are required" });
-    }
-
-    const existingUser = await UserModel.findOne({ username });
-    if (existingUser) {
-      return res.status(400).json({ error: "Username already exists" });
-    }
-
-    const newUser = new UserModel({ username, password });
-    await newUser.save();
-
-    res.json({ message: "✅ User registered successfully!" });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
 app.listen(PORT, "0.0.0.0", () => {
   console.log(
     `🚀 Server running at http://localhost:${PORT} and http://0.0.0.0:${PORT}`

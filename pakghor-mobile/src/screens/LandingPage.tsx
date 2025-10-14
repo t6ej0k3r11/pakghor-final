@@ -134,8 +134,8 @@ const LandingPage = () => {
             </View>
           </LinearGradient>
         </View>
+        <Footer />
       </ScrollView>
-      <Footer />
     </SafeAreaView>
   );
 };

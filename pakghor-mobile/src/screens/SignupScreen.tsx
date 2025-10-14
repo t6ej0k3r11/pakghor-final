@@ -72,11 +72,16 @@ const Signup = () => {
           showsVerticalScrollIndicator={false}
         >
           <View style={styles.box}>
-            <Image
-              source={require("../assets/logo.jpg")}
-              style={styles.logo}
-              resizeMode="cover"
-            />
+            {/* Logo clickable */}
+            <TouchableOpacity
+              onPress={() => navigation.navigate("LandingPage" as never)}
+            >
+              <Image
+                source={require("../assets/logo.jpg")}
+                style={styles.logo}
+                resizeMode="cover"
+              />
+            </TouchableOpacity>
 
             <Text style={styles.title}>Create Your PakGhor Account</Text>
 
@@ -116,12 +121,19 @@ const Signup = () => {
             />
 
             {/* Gradient Signup Button */}
-            <TouchableOpacity onPress={handleSignup} activeOpacity={0.9}>
+            <TouchableOpacity
+              onPress={handleSignup}
+              activeOpacity={0.9}
+              style={{ width: "100%" }}
+            >
               <LinearGradient
                 colors={["#f7e169", "#ff7e5f"]}
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 1 }}
-                style={styles.signupBtn}
+                style={[
+                  styles.signupBtn,
+                  { paddingVertical: isLargeScreen ? 16 : 14 },
+                ]}
               >
                 <Text style={styles.signupText}>
                   {loading ? "Creating Account..." : "Sign Up"}
@@ -169,13 +181,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   logo: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
+    width: 110,
+    height: 110,
+    borderRadius: 55,
     marginBottom: 20,
   },
   title: {
-    fontSize: 24,
+    fontSize: 22,
     fontWeight: "700",
     color: "#333",
     marginBottom: 20,
@@ -186,7 +198,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#ffcc99",
     borderRadius: 12,
-    paddingVertical: 12,
+    paddingVertical: 14,
     paddingHorizontal: 16,
     fontSize: 16,
     color: "#333",
@@ -195,7 +207,6 @@ const styles = StyleSheet.create({
   },
   signupBtn: {
     width: "100%",
-    paddingVertical: 14,
     borderRadius: 12,
     alignItems: "center",
     justifyContent: "center",

@@ -65,7 +65,9 @@ const Footer = () => {
         <Text style={styles.bottomText}>
           © {currentYear} t63j0ker. All rights reserved.
         </Text>
-        <TouchableOpacity onPress={() => openURL("https://pakghor.com")}>
+        <TouchableOpacity
+          onPress={() => openURL("https://pakghor-final.vercel.app")}
+        >
           <Text style={styles.websiteLink}>pakghor.com</Text>
         </TouchableOpacity>
       </View>

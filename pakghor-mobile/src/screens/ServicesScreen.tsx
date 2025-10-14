@@ -172,8 +172,8 @@ const Services = () => {
             </TouchableOpacity>
           ))}
         </View>
+        <Footer />
       </ScrollView>
-      <Footer />
     </SafeAreaView>
   );
 };

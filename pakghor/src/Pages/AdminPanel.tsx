@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import "./AdminPanel.css";
+import type { Card } from "../types";
 
 const AdminPanel: React.FC = () => {
-  const [cards, setCards] = useState<any[]>([]);
+  const [cards, setCards] = useState<Card[]>([]);
   const [form, setForm] = useState({
     title: "",
     subtitle: "",
@@ -13,18 +14,18 @@ const AdminPanel: React.FC = () => {
   const [editingId, setEditingId] = useState<string | null>(null);
   const apiUrl = import.meta.env.VITE_API_URL;
 
-  useEffect(() => {
-    fetchCards();
-  }, []);
-
-  const fetchCards = async () => {
+  const fetchCards = useCallback(async () => {
     // const res = await fetch("http://localhost:5000/api/cards");
 
     // const res = await fetch("https://pakghor-final-658f.vercel.app/api/cards");
     const res = await fetch(`${apiUrl}/cards`);
     const data = await res.json();
     setCards(data);
-  };
+  }, [apiUrl]);
+
+  useEffect(() => {
+    fetchCards();
+  }, [fetchCards]);
 
   const handleSubmit = async () => {
     const method = editingId ? "PUT" : "POST";
@@ -52,8 +53,14 @@ const AdminPanel: React.FC = () => {
     setCards(cards.filter((c) => c._id !== id));
   };
 
-  const handleEdit = (card: any) => {
-    setForm(card);
+  const handleEdit = (card: Card) => {
+    setForm({
+      title: card.title,
+      subtitle: card.subtitle || "",
+      body: card.body,
+      image: card.image || "",
+      indicator: card.indicator || "",
+    });
     setEditingId(card._id);
   };
 

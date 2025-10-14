@@ -187,8 +187,8 @@ const ProductDetails = () => {
             <Text style={styles.buttonText}>Order Now</Text>
           </TouchableOpacity>
         </View>
+        <Footer />
       </ScrollView>
-      <Footer />
     </SafeAreaView>
   );
 };

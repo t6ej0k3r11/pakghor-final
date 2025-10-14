@@ -226,8 +226,8 @@ const Contact: React.FC = () => {
             </LinearGradient>
           </TouchableOpacity>
         </View>
+        <Footer />
       </ScrollView>
-      <Footer />
     </SafeAreaView>
   );
 };

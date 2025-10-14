@@ -141,8 +141,8 @@ const AddCard: React.FC = () => {
             <Text style={styles.buttonText}>Create Card</Text>
           </TouchableOpacity>
         </View>
+        <Footer />
       </ScrollView>
-      <Footer />
     </SafeAreaView>
   );
 };

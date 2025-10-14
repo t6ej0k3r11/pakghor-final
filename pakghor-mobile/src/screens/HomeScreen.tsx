@@ -7,6 +7,7 @@ import {
   FlatList,
   ScrollView,
   Dimensions,
+  Alert,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
@@ -114,9 +115,17 @@ const HomeScreen: React.FC = () => {
 
   useEffect(() => {
     fetch(`${apiUrl}/cards`)
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        return res.json();
+      })
       .then((data) => setCards(data))
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        console.error("Fetch error:", err);
+        Alert.alert("Error", `Failed to load cards: ${err.message}`);
+      });
   }, []);
 
   const renderCard = ({ item }: { item: CardType }) => (
@@ -169,9 +178,8 @@ const HomeScreen: React.FC = () => {
         )}
         contentContainerStyle={styles.container}
         showsVerticalScrollIndicator={false}
-        ListFooterComponent={<View style={{ height: 20 }} />}
+        ListFooterComponent={<Footer />}
       />
-      <Footer />
     </SafeAreaView>
   );
 };

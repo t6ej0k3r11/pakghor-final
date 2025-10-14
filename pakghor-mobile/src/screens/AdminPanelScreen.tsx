@@ -309,8 +309,8 @@ const AdminPanel: React.FC = () => {
             </View>
           ))}
         </View>
+        <Footer />
       </ScrollView>
-      <Footer />
     </SafeAreaView>
   );
 };

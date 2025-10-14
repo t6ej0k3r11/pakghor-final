@@ -278,8 +278,8 @@ const CheckoutScreen: React.FC = () => {
             <Text style={styles.submitBtnText}>Confirm Order</Text>
           </TouchableOpacity>
         </View>
+        <Footer />
       </ScrollView>
-      <Footer />
     </SafeAreaView>
   );
 };

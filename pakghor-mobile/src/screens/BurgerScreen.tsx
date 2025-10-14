@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, Dimensions } from "react-native";
+import { View, Text, StyleSheet, Dimensions, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
@@ -28,10 +28,10 @@ function BurgerScreen() {
         brandName="PakGhor"
         navItems={["Home", "About", "Services", "Contact"]}
       />
-      <View style={styles.container}>
+      <ScrollView contentContainerStyle={styles.container}>
         <Text style={styles.text}>BurgerScreen</Text>
-      </View>
-      <Footer />
+        <Footer />
+      </ScrollView>
     </SafeAreaView>
   );
 }

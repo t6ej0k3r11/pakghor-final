@@ -16,7 +16,13 @@ router.post("/cards", async (req, res) => {
 router.get("/cards", async (req, res) => {
   try {
     const cards = await Card.find();
-    res.json(cards);
+    const baseUrl = `${req.protocol}://${req.get("host")}`;
+    res.json(
+      cards.map((card) => ({
+        ...card.toObject(),
+        image: `${baseUrl}/api/images/${card._id}`,
+      }))
+    );
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -29,7 +35,26 @@ router.get("/cards/:id", async (req, res) => {
     if (!card) {
       return res.status(404).json({ error: "Card not found" });
     }
-    res.json(card);
+    const baseUrl = `${req.protocol}://${req.get("host")}`;
+    res.json({
+      ...card.toObject(),
+      image: `${baseUrl}/api/images/${card._id}`,
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+router.get("/images/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const card = await Card.findById(id);
+    if (!card) {
+      return res.status(404).json({ error: "Card not found" });
+    }
+    const imageBuffer = Buffer.from(card.image.split(",")[1], "base64");
+    res.set("Content-Type", "image/jpeg");
+    res.send(imageBuffer);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

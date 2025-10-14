@@ -48,7 +48,7 @@ const Login: React.FC = () => {
       } else {
         setMsg(data.error || "❌ Invalid credentials");
       }
-    } catch (err) {
+    } catch {
       setMsg("⚠️ Server error, please try again later.");
     }
   };

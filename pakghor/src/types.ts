@@ -24,3 +24,16 @@ export interface CardInterface {
   link?: string;
   price?: number;
 }
+
+export interface Card {
+  _id: string;
+  title: string;
+  subtitle?: string;
+  body: string;
+  image?: string;
+  indicator?: string;
+  badge?: BadgeInterface;
+  btn: ButtonInterface;
+  link?: string;
+  price?: number;
+}

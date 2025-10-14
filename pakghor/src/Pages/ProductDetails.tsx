@@ -25,7 +25,7 @@ const ProductDetails = () => {
     fetch(`${apiUrl}/cards/${id}`)
       .then((res) => res.json())
       .then((data) => setProduct(data));
-  }, [id]);
+  }, [id, apiUrl]);
 
   if (!product) return <p className="loading">Loading...</p>;
 
